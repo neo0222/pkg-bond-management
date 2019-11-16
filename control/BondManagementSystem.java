@@ -10,11 +10,11 @@ public class BondManagementSystem {
   public static void main(String args[]) {
     System.out.println("------ 債権の在庫管理システム ------");
 
-    //メーニューの番号
+    //メニューの番号
     int menueNum = 0;
 
     do {
-      //メーニューの番号の初期化
+      //メニューの番号の初期化
       menueNum = 0;
       //メニューの選択
       System.out.println("\n<メニュー>");
