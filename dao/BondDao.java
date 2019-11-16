@@ -8,7 +8,7 @@ import model.data.Bond;
 /**
   *銘柄マスターデータファイルに関する処理をするクラス。
   */
-public class MasterDataDao {
+public class BondDao {
   /**
     *探索する銘柄コードと一致する銘柄の有無を確認するメソッド
     * @param code　探索する銘柄コード

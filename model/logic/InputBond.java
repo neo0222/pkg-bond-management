@@ -3,8 +3,8 @@ package model.logic;
 import java.io.*;
 import java.math.BigDecimal;
 
-import dao.MasterDataDao;
-import dao.BalanceDataDao;
+import dao.BondDao;
+import dao.BalanceDao;
 import model.data.Bond;
 import model.data.Balance;
 
@@ -13,6 +13,11 @@ import model.data.Balance;
   *在庫データを入力する処理をするクラス。
   */
 public class InputBond {
+  /** マスターデータのDAO　*/
+  private BondDao bondDao = new BondDao();
+  /** 残高データのDAO　*/
+  private BalanceDao balanceDao = new BalanceDao();
+
   /**
     *在庫データを入力する処理をするメソッド
     */
@@ -31,10 +36,8 @@ public class InputBond {
         }
 
         //コードがマスターファイルに存在するか確認する
-        MasterDataDao masterDataDao = new MasterDataDao();
-
         //存在しない場合はエラーを表示
-        if(!masterDataDao.isExistBond(code)) {
+        if(!this.bondDao.isExistBond(code)) {
           System.out.println("銘柄コード " + code + " の銘柄は存在しません。\n");
           continue;
         }
@@ -46,12 +49,11 @@ public class InputBond {
         BigDecimal addBookValue = new BigDecimal(br.readLine());
 
         //指定のコードの銘柄を保有しているか確認
-        BalanceDataDao balanceDataDao = new BalanceDataDao();
-        boolean isExistBond = balanceDataDao.isExistBond(code);
+        boolean isExistBond = this.balanceDao.isExistBond(code);
 
         if(isExistBond) { //保有しているときの処理
           //銘柄の保有数量と簿価を取得
-          Balance balance = balanceDataDao.getBalanceData(code);
+          Balance balance = this.balanceDao.getBalanceData(code);
           BigDecimal oldAmount = balance.getAmount();
           BigDecimal oldBookValue = balance.getBookValue();
 
@@ -76,7 +78,7 @@ public class InputBond {
           //銘柄残高ファイル上の保有数量と簿価の更新
           balance.setAmount(newAmount);
           balance.setBookValue(newBookValue);
-          balanceDataDao.updateBalanceData(code, balance, isExistBond);
+          this.balanceDao.updateBalanceData(code, balance, isExistBond);
 
         } else { //保有していないときの処理
           //保有数量が0未満ならエラーを表示
@@ -86,7 +88,7 @@ public class InputBond {
           }
 
           Balance balance = new Balance(addAmount, addBookValue);
-          balanceDataDao.updateBalanceData(code, balance, isExistBond);
+          this.balanceDao.updateBalanceData(code, balance, isExistBond);
         }
       } catch(IOException e) {
         System.out.println(e);

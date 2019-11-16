@@ -5,20 +5,24 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 
-import dao.MasterDataDao;
-import dao.BalanceDataDao;
+import dao.BondDao;
+import dao.BalanceDao;
 import model.data.Bond;
 
 /**
   *当日の値洗い処理をするクラス
   */
 public class UpdateBond {
+  /** マスターデータのDAO　*/
+  private BondDao bondDao = new BondDao();
+  /** 残高データのDAO　*/
+  private BalanceDao balanceDao = new BalanceDao();
+
   /**
     *当日の値洗い処理をするメソッド
     */
   public void execute() {
-    BalanceDataDao balanceDataDao = new BalanceDataDao();
-    List<String> bondList = balanceDataDao.getBalanceList();
+    List<String> bondList = this.balanceDao.getBalanceList();
 
     //1つずつ銘柄の時価を入力する
     for(int i = 0; i < bondList.size(); i++) {
@@ -29,8 +33,7 @@ public class UpdateBond {
       BigDecimal bookValue = new BigDecimal(bondData[2]);
 
       //銘柄名を取得
-      MasterDataDao masterDataDao = new MasterDataDao();
-      Bond bond = masterDataDao.getMasterData(code);
+      Bond bond = this.bondDao.getMasterData(code);
       String name = bond.getName();
 
       try {
@@ -49,6 +52,6 @@ public class UpdateBond {
         System.out.println(e);
       }
     }
-    balanceDataDao.writeBalanceData(bondList);
+    this.balanceDao.writeBalanceData(bondList);
   }
 }

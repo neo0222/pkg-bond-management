@@ -5,20 +5,24 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
 
-import dao.MasterDataDao;
-import dao.BalanceDataDao;
+import dao.BondDao;
+import dao.BalanceDao;
 import model.data.Bond;
 
 /**
   *保有銘柄残高一覧を表示するクラス
   */
 public class ExportBondList {
+  /** マスターデータのDAO　*/
+  private BondDao bondDao = new BondDao();
+  /** 残高データのDAO　*/
+  private BalanceDao balanceDao = new BalanceDao();
+
   /**
     *保有銘柄残高一覧を表示するメソッド
     */
   public void execute() {
-    BalanceDataDao balanceDataDao = new BalanceDataDao();
-    List<String> bondList = balanceDataDao.getBalanceList();
+    List<String> bondList = this.balanceDao.getBalanceList();
     //銘柄の情報を１つずつ取得
     for(int i = 0; i < bondList.size(); i++) {
       //銘柄コード、保有数量、簿価、時価を取得
@@ -29,8 +33,7 @@ public class ExportBondList {
       BigDecimal currentPrice = (new BigDecimal(bondData[3])).setScale(3, BigDecimal.ROUND_DOWN);
 
       //銘柄名、償還年月日、利率、クーポン回数を取得
-      MasterDataDao masterDataDao = new MasterDataDao();
-      Bond masterData = masterDataDao.getMasterData(code);
+      Bond masterData = this.bondDao.getMasterData(code);
       String name = masterData.getName();
       BigDecimal rate = masterData.getRate();
       int maturity = masterData.getMaturity();

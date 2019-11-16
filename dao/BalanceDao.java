@@ -9,7 +9,7 @@ import model.data.Balance;
 /**
   *銘柄残高ファイルに関する処理をするクラス。
   */
-public class BalanceDataDao {
+public class BalanceDao {
   /**
     *銘柄のコードの保有数量と簿価を取り出すメソッド
     * @param code　探索する銘柄コード

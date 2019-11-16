@@ -8,6 +8,11 @@ import model.logic.ExportBondList;
 
 public class BondManagementSystem {
   public static void main(String args[]) {
+
+    InputBond ib = new InputBond();
+    UpdateBond ub = new UpdateBond();
+    ExportBondList ebl = new ExportBondList();
+
     System.out.println("------ 債権の在庫管理システム ------");
 
     //メニューの番号
@@ -36,17 +41,14 @@ public class BondManagementSystem {
       switch(menueNum) {
         case 1:
          //在庫データの入力
-         InputBond ib = new InputBond();
          ib.execute();
          break;
         case 2:
          //当日の値洗い
-         UpdateBond ub = new UpdateBond();
          ub.execute();
          break;
         case 3:
          //保有銘柄残高一覧の表示
-         ExportBondList ebl = new ExportBondList();
          ebl.execute();
          break;
         case 4:
