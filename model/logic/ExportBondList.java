@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import dao.BondDao;
 import dao.BalanceDao;
 import model.data.Bond;
+import model.data.Balance;
 
 /**
   *保有銘柄残高一覧を表示するクラス
@@ -22,15 +23,19 @@ public class ExportBondList {
     *保有銘柄残高一覧を表示するメソッド
     */
   public void execute() {
-    List<String> bondList = this.balanceDao.getBalanceList();
+    //銘柄残高情報のリストを取得
+    List<Balance> balanceList = this.balanceDao.getBalanceList();
+
+    //在庫データ一覧を表示するためのリストを用意
+    List<String> bondList = new ArrayList<>();
+
     //銘柄の情報を１つずつ取得
-    for(int i = 0; i < bondList.size(); i++) {
+    for(Balance balance : balanceList) {
       //銘柄コード、保有数量、簿価、時価を取得
-      String[] bondData = bondList.get(i).split(",");
-      String code = bondData[0];
-      BigDecimal amount = (new BigDecimal(bondData[1])).setScale(0, BigDecimal.ROUND_DOWN);
-      BigDecimal bookValue = (new BigDecimal(bondData[2])).setScale(3, BigDecimal.ROUND_DOWN);
-      BigDecimal currentPrice = (new BigDecimal(bondData[3])).setScale(3, BigDecimal.ROUND_DOWN);
+      String code = balance.getCode();
+      BigDecimal amount = balance.getAmount();
+      BigDecimal bookValue = balance.getBookValue();
+      BigDecimal currentPrice = balance.getCurrentPrice();
 
       //銘柄名、償還年月日、利率、クーポン回数を取得
       Bond masterData = this.bondDao.getMasterData(code);
@@ -51,7 +56,7 @@ public class ExportBondList {
                   code, name, maturity, rate.toString(), coupon, amount.toString(),
                   bookValue.toString(), currentPrice.toString(), valuationPL.toString());
       }
-      bondList.set(i, bond);
+      bondList.add(bond);
     }
 
     System.out.printf("|%-7s|%-16s|%-5s|%-6s|%-5s|%-4s|%-13s|%-13s|%-8s|\n",

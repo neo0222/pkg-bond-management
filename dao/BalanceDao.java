@@ -26,7 +26,7 @@ public class BalanceDao {
         String[] bondData = line.split(",",-1);
         //一致する銘柄に対する処理
         if(bondData[0].equals(code)) {
-          balance = new Balance(new BigDecimal(bondData[1]),new BigDecimal(bondData[2]));
+          balance = new Balance(code, new BigDecimal(bondData[1]),new BigDecimal(bondData[2]));
           return balance;
         }
       }
@@ -76,35 +76,40 @@ public class BalanceDao {
   }
   /**
     *銘柄の簿価と保有数量を更新するメソッド
-    * @param code　     銘柄コード
-    * @param balance    保有数量・簿価・時価の情報
-    * @param mode       更新は0、追加は1
+    * @param balance 銘柄コード・保有数量・簿価・時価の情報
     */
-  public void updateBalanceData(String code, Balance balance, boolean mode) {
-    String updateLine = code + "," + balance.getAmount() + "," + balance.getBookValue() + "," + balance.getCurrentPrice();
-
+  public void updateBalanceData(Balance balance) {
     //銘柄残高の一覧を取得
-    List<String> bondList = getBalanceList();
+    List<Balance> balanceList = getBalanceList();
 
-    if(mode) { //更新
-      //更新する銘柄の銘柄残高ファイルのなかの行番
-      int updateLineNum = getRowNumber(code);
-
-      //保有数量と簿価を更新
-      bondList.set(updateLineNum,updateLine);
-    } else { //追加
-      bondList.add(updateLine);
-    }
+    //更新する銘柄の銘柄残高ファイル中の行番
+    int updateLineNum = getRowNumber(balance.getCode());
+    //保有数量と簿価を更新
+    balanceList.set(updateLineNum,balance);
 
     //ファイルに書き込み
-    writeBalanceData(bondList);
+    writeBalanceData(balanceList);
+  }
+  /**
+    *銘柄残高ファイルに新たな銘柄を追加するメソッド
+    * @param balance 銘柄コード・保有数量・簿価・時価の情報
+    */
+  public void putBalanceData(Balance balance) {
+    //銘柄残高の一覧を取得
+    List<Balance> balanceList = getBalanceList();
+
+    //銘柄残高一覧の末尾に銘柄を追加
+    balanceList.add(balance);
+
+    //ファイルに書き込み
+    writeBalanceData(balanceList);
   }
   /**
     *銘柄残高ファイルから１行ずつリストに格納し返すメソッド
     * @return 銘柄残高ファイルにある銘柄情報リスト
     */
-  public List<String> getBalanceList() {
-    List<String> bondList = new ArrayList<>();
+  public List<Balance> getBalanceList() {
+    List<Balance> balanceList = new ArrayList<>();
 
     BufferedReader br = null;
     try {
@@ -112,7 +117,10 @@ public class BalanceDao {
 
       String line = null;
       while((line = br.readLine()) != null) {
-        bondList.add(line);
+        String[] balanceData = line.split(",", -1);
+        Balance balance = new Balance(balanceData[0], new BigDecimal(balanceData[1]),
+                      new BigDecimal(balanceData[2]), new BigDecimal(balanceData[3]));
+        balanceList.add(balance);
       }
     } catch(IOException e) {
       System.out.println(e);
@@ -125,20 +133,20 @@ public class BalanceDao {
         }
       }
     }
-    return bondList;
+    return balanceList;
   }
   /**
     *リストから１行ずつ銘柄残高ファイルに書き込むメソッド
-    * @param bondlist 銘柄の残高情報
+    * @param balanceList 銘柄の残高情報
     * @return 処理が成功するとtrue失敗するとfalse
     */
-  public boolean writeBalanceData(List<String> bondList) {
+  public boolean writeBalanceData(List<Balance> balanceList) {
     PrintWriter pw = null;
     try {
       pw = new PrintWriter(new FileWriter("csv/balancedata.csv",false));
       //銘柄残高ファイルに書き込み
-      for(String line : bondList) {
-        pw.println(line);
+      for(Balance balance : balanceList) {
+        pw.println(balance.toString());
       }
 
       return true;

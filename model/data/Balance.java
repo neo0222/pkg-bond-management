@@ -7,6 +7,8 @@ import java.math.BigDecimal;
   *このクラスは保有債権銘柄の在庫情報を表す。
   */
 public class Balance {
+  /** 銘柄コード */
+  private String code;
   /** 保有数量 */
   private BigDecimal amount;
   /** 簿価 */
@@ -14,18 +16,21 @@ public class Balance {
   /** 時価 */
   private BigDecimal currentPrice;
 
-  public Balance(BigDecimal amount,BigDecimal bookValue) {
+  public Balance(String code, BigDecimal amount, BigDecimal bookValue) {
+    this.code = code;
     this.amount = amount;
     this.bookValue = bookValue;
     this.currentPrice = BigDecimal.valueOf(0);
   }
-  public Balance(BigDecimal amount,BigDecimal bookValue, BigDecimal currentPrice) {
+  public Balance(String code, BigDecimal amount,BigDecimal bookValue, BigDecimal currentPrice) {
+    this.code = code;
     this.amount = amount;
     this.bookValue = bookValue;
     this.currentPrice = currentPrice;
   }
 
   //ゲッター
+  public String getCode() { return code; }
   public BigDecimal getAmount() { return amount; }
   public BigDecimal getBookValue() { return bookValue; }
   public BigDecimal getCurrentPrice() { return currentPrice; }
@@ -37,6 +42,6 @@ public class Balance {
 
   @Override
   public String toString() {
-    return getAmount() + "," + getBookValue() + "," + getCurrentPrice();
+    return getCode() + "," + getAmount() + "," + getBookValue() + "," + getCurrentPrice();
   }
 }

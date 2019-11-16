@@ -44,21 +44,19 @@ public class InputBond {
 
         //保有数量と新たな簿価の入力
         System.out.print("保有数量>");
-        BigDecimal addAmount = new BigDecimal(br.readLine());
+        BigDecimal amountToBeAdded = new BigDecimal(br.readLine());
         System.out.print("簿価>");
-        BigDecimal addBookValue = new BigDecimal(br.readLine());
+        BigDecimal bookValueToBeAdded = new BigDecimal(br.readLine());
 
         //指定のコードの銘柄を保有しているか確認
-        boolean isExistBond = this.balanceDao.isExistBond(code);
-
-        if(isExistBond) { //保有しているときの処理
+        if(this.balanceDao.isExistBond(code)) { //保有しているときの処理
           //銘柄の保有数量と簿価を取得
           Balance balance = this.balanceDao.getBalanceData(code);
           BigDecimal oldAmount = balance.getAmount();
           BigDecimal oldBookValue = balance.getBookValue();
 
           //保有数量の更新
-          BigDecimal newAmount = oldAmount.add(addAmount);
+          BigDecimal newAmount = oldAmount.add(amountToBeAdded);
 
           //保有数量が0未満ならエラーを表示
           if(newAmount.compareTo(BigDecimal.valueOf(0)) == -1) {
@@ -71,24 +69,24 @@ public class InputBond {
           if(newAmount.equals(BigDecimal.valueOf(0))) {
             newBookValue = BigDecimal.valueOf(0);
           } else {
-            newBookValue = (oldAmount.multiply(oldBookValue).add(addAmount.multiply(addBookValue)))
+            newBookValue = (oldAmount.multiply(oldBookValue).add(amountToBeAdded.multiply(bookValueToBeAdded)))
                                     .divide(newAmount,3,BigDecimal.ROUND_DOWN);
           }
 
           //銘柄残高ファイル上の保有数量と簿価の更新
           balance.setAmount(newAmount);
           balance.setBookValue(newBookValue);
-          this.balanceDao.updateBalanceData(code, balance, isExistBond);
+          this.balanceDao.updateBalanceData(balance);
 
         } else { //保有していないときの処理
           //保有数量が0未満ならエラーを表示
-          if(addAmount.compareTo(BigDecimal.valueOf(0)) == -1) {
+          if(amountToBeAdded.compareTo(BigDecimal.valueOf(0)) == -1) {
             System.out.println("保有数量がマイナスです。");
             continue;
           }
 
-          Balance balance = new Balance(addAmount, addBookValue);
-          this.balanceDao.updateBalanceData(code, balance, isExistBond);
+          Balance balance = new Balance(code, amountToBeAdded, bookValueToBeAdded);
+          this.balanceDao.putBalanceData(balance);
         }
       } catch(IOException e) {
         System.out.println(e);

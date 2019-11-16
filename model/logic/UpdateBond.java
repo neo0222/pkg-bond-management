@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import dao.BondDao;
 import dao.BalanceDao;
 import model.data.Bond;
+import model.data.Balance;
 
 /**
   *当日の値洗い処理をするクラス
@@ -22,16 +23,14 @@ public class UpdateBond {
     *当日の値洗い処理をするメソッド
     */
   public void execute() {
-    List<String> bondList = this.balanceDao.getBalanceList();
+    //銘柄残高情報のリストを取得
+    List<Balance> balanceList = this.balanceDao.getBalanceList();
 
     //1つずつ銘柄の時価を入力する
-    for(int i = 0; i < bondList.size(); i++) {
-      //銘柄コード、保有数量、簿価を取得
-      String[] bondData = bondList.get(i).split(",");
-      String code = bondData[0];
-      BigDecimal amount = new BigDecimal(bondData[1]);
-      BigDecimal bookValue = new BigDecimal(bondData[2]);
-
+    for(int i = 0; i < balanceList.size(); i++) {
+      Balance balance = balanceList.get(i);
+      //銘柄コードを取得
+      String code = balance.getCode();
       //銘柄名を取得
       Bond bond = this.bondDao.getMasterData(code);
       String name = bond.getName();
@@ -44,14 +43,15 @@ public class UpdateBond {
         System.out.println("\n銘柄コード: " + code + " | 銘柄名: " + name);
         System.out.print("時価>");
         BigDecimal currentPrice = new BigDecimal(br.readLine());
+        //時価を銘柄情報に設定する
+        balance.setCurrentPrice(currentPrice);
 
-        String updateLine = code + "," + amount + "," + bookValue + "," + currentPrice;
-        bondList.set(i,updateLine);
+        balanceList.set(i, balance);
 
       } catch(IOException e) {
         System.out.println(e);
       }
     }
-    this.balanceDao.writeBalanceData(bondList);
+    this.balanceDao.writeBalanceData(balanceList);
   }
 }

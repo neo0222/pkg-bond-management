@@ -43,7 +43,7 @@ public class BondDao {
   /**
     *銘柄のコードを探索し、情報を取り出すメソッド
     * @param code　探索する銘柄コード
-    * @return 探索する銘柄コードに等しい銘柄のマスターデータの配列
+    * @return 探索する銘柄コードに等しい銘柄のマスターデータ
     */
   public Bond getMasterData(String code) {
     Bond bond = null;
