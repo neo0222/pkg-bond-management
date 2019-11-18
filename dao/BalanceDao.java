@@ -80,15 +80,15 @@ public class BalanceDao {
     */
   public void updateBalanceData(Balance balance) {
     //銘柄残高の一覧を取得
-    List<Balance> balanceList = getBalanceList();
+    List<Balance> balanceList = this.getBalanceList();
 
     //更新する銘柄の銘柄残高ファイル中の行番
-    int updateLineNum = getRowNumber(balance.getCode());
+    int updateLineNum = this.getRowNumber(balance.getCode());
     //保有数量と簿価を更新
     balanceList.set(updateLineNum,balance);
 
     //ファイルに書き込み
-    writeBalanceData(balanceList);
+    this.writeBalanceData(balanceList);
   }
   /**
     *銘柄残高ファイルに新たな銘柄を追加するメソッド
@@ -96,13 +96,13 @@ public class BalanceDao {
     */
   public void putBalanceData(Balance balance) {
     //銘柄残高の一覧を取得
-    List<Balance> balanceList = getBalanceList();
+    List<Balance> balanceList = this.getBalanceList();
 
     //銘柄残高一覧の末尾に銘柄を追加
     balanceList.add(balance);
 
     //ファイルに書き込み
-    writeBalanceData(balanceList);
+    this.writeBalanceData(balanceList);
   }
   /**
     *銘柄残高ファイルから１行ずつリストに格納し返すメソッド
