@@ -42,6 +42,6 @@ public class Balance {
 
   @Override
   public String toString() {
-    return getCode() + "," + getAmount() + "," + getBookValue() + "," + getCurrentPrice();
+    return code + "," + amount + "," + bookValue + "," + currentPrice;
   }
 }

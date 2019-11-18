@@ -44,6 +44,6 @@ public class Bond {
 
   @Override
   public String toString() {
-    return getCode() + "," + getName() + "," + getMaturity() + "," + getCoupon() + "," + getRate();
+    return code + "," + name + "," + rate + "," + maturity + "," + coupon;
   }
 }
