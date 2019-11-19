@@ -1,7 +1,7 @@
 package control;
 
 import java.io.*;
-import model.logic.InputBond;
+import model.logic.TradeBond;
 import model.logic.UpdateBond;
 import model.logic.ExportBondList;
 
@@ -9,7 +9,7 @@ import model.logic.ExportBondList;
 public class BondManagementSystem {
   public static void main(String args[]) {
 
-    InputBond ib = new InputBond();
+    TradeBond ib = new TradeBond();
     UpdateBond ub = new UpdateBond();
     ExportBondList ebl = new ExportBondList();
 

@@ -9,10 +9,10 @@ import model.data.Bond;
 import model.data.Balance;
 
 /**
-  *在庫データの入力処理。
-  *在庫データを入力する処理をするクラス。
+  *売買取引データの入力処理。
+  *売買取引データを入力する処理をするクラス。
   */
-public class InputBond {
+public class TradeBond {
   /** マスターデータのDAO　*/
   private BondDao bondDao = new BondDao();
   /** 残高データのDAO　*/
