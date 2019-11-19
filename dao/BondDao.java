@@ -9,6 +9,8 @@ import model.data.Bond;
   *銘柄マスターデータファイルに関する処理をするクラス。
   */
 public class BondDao {
+  /** マスターファイルパス */
+  private final String filePath = "csv/masterdata.csv";
   /**
     *探索する銘柄コードと一致する銘柄の有無を確認するメソッド
     * @param code　探索する銘柄コード
@@ -17,7 +19,7 @@ public class BondDao {
   public boolean isExistBond(String code) {
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader("csv/masterdata.csv"));
+      br = new BufferedReader(new FileReader(filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
@@ -49,7 +51,7 @@ public class BondDao {
     Bond bond = null;
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader("csv/masterdata.csv"));
+      br = new BufferedReader(new FileReader(filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {

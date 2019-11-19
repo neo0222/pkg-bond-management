@@ -14,10 +14,10 @@ import model.data.TradeType;
   *取引ファイルに関する処理をするクラス。
   */
 public class TradeDao {
-  /** 取引ファイル名 */
-  private final String filename = "csv/tradedata.csv";
+  /** 取引ファイルパス */
+  private final String filePath = "csv/tradedata.csv";
   /** 取引ファイルの存在自体を操作するためのPathインスタンス */
-  private Path path = Paths.get(this.filename);
+  private Path path = Paths.get(this.filePath);
 
   /**
     *取引ファイルが存在するか確認するメソッド
@@ -55,7 +55,7 @@ public class TradeDao {
 
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader(filename));
+      br = new BufferedReader(new FileReader(filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
@@ -85,7 +85,7 @@ public class TradeDao {
   public boolean writeTradeData(List<Trade> tradeList) {
     PrintWriter pw = null;
     try {
-      pw = new PrintWriter(new FileWriter(filename,false));
+      pw = new PrintWriter(new FileWriter(filePath,false));
       //銘柄残高ファイルに書き込み
       for(Trade trade : tradeList) {
         pw.println(trade.toString());

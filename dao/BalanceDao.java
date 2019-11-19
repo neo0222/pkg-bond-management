@@ -10,6 +10,8 @@ import model.data.Balance;
   *銘柄残高ファイルに関する処理をするクラス。
   */
 public class BalanceDao {
+  /** 銘柄残高ファイルパス */
+  private final String filePath = "csv/balancedata.csv";
   /**
     *銘柄のコードの保有数量と簿価を取り出すメソッド
     * @param code　探索する銘柄コード
@@ -19,7 +21,7 @@ public class BalanceDao {
     Balance balance = null;
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader("csv/balancedata.csv"));
+      br = new BufferedReader(new FileReader(filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
@@ -51,7 +53,7 @@ public class BalanceDao {
   public boolean isExistBond(String code) {
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader("csv/balancedata.csv"));
+      br = new BufferedReader(new FileReader(filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
@@ -113,7 +115,7 @@ public class BalanceDao {
 
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader("csv/balancedata.csv"));
+      br = new BufferedReader(new FileReader(filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
@@ -143,7 +145,7 @@ public class BalanceDao {
   public boolean writeBalanceData(List<Balance> balanceList) {
     PrintWriter pw = null;
     try {
-      pw = new PrintWriter(new FileWriter("csv/balancedata.csv",false));
+      pw = new PrintWriter(new FileWriter(filePath,false));
       //銘柄残高ファイルに書き込み
       for(Balance balance : balanceList) {
         pw.println(balance.toString());
@@ -173,7 +175,7 @@ public class BalanceDao {
 
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader("csv/balancedata.csv"));
+      br = new BufferedReader(new FileReader(filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
