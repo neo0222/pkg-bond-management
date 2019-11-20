@@ -27,8 +27,7 @@ public class UpdateBond {
     List<Balance> balanceList = this.balanceDao.getBalanceList();
 
     //1つずつ銘柄の時価を入力する
-    for(int i = 0; i < balanceList.size(); i++) {
-      Balance balance = balanceList.get(i);
+    for(Balance balance : balanceList) {
       //銘柄コードを取得
       String code = balance.getCode();
       //銘柄名を取得
@@ -45,8 +44,6 @@ public class UpdateBond {
         BigDecimal currentPrice = new BigDecimal(br.readLine());
         //時価を銘柄情報に設定する
         balance.setCurrentPrice(currentPrice);
-
-        balanceList.set(i, balance);
 
       } catch(IOException e) {
         System.out.println(e);
