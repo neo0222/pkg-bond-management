@@ -23,8 +23,39 @@ public class TradeDao {
     *取引ファイルが存在するか確認するメソッド
     * @return 取引ファイルが存在すればtrue
     */
-  private boolean isExsistTradeData() {
+  public boolean isExsistTradeData() {
     return Files.exists(path);
+  }
+  /**
+    *探索する銘柄コードと一致する銘柄の取引の有無を確認するメソッド
+    * @param code　探索する銘柄コード
+    * @return 探索する銘柄コードの取引が存在すればtrue
+    */
+  public boolean isExistTrade(String code) {
+    BufferedReader br = null;
+    try {
+      br = new BufferedReader(new FileReader(filePath));
+
+      String line = null;
+      while((line = br.readLine()) != null) {
+        String[] bond = line.split(",",-1);
+        //一致する銘柄があったときの処理
+        if(bond[0].equals(code)) {
+          return true;
+        }
+      }
+    } catch(IOException e) {
+      System.out.println(e);
+    } finally {
+      if(br != null){
+        try {
+          br.close();
+        } catch(IOException e2) {
+          System.out.println(e2);
+        }
+      }
+    }
+    return false;
   }
   /**
     *取引ファイルに新たな銘柄を追加するメソッド

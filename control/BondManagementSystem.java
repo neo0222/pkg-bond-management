@@ -4,6 +4,7 @@ import java.io.*;
 import model.logic.TradeBond;
 import model.logic.UpdateBond;
 import model.logic.ExportBondList;
+import model.logic.CancelTrade;
 
 
 public class BondManagementSystem {
@@ -12,6 +13,7 @@ public class BondManagementSystem {
     TradeBond ib = new TradeBond();
     UpdateBond ub = new UpdateBond();
     ExportBondList ebl = new ExportBondList();
+    CancelTrade ct = new CancelTrade();
 
     System.out.println("------ 債権の在庫管理システム ------");
 
@@ -23,7 +25,7 @@ public class BondManagementSystem {
       menueNum = 0;
       //メニューの選択
       System.out.println("\n<メニュー>");
-      System.out.println("1:在庫データの入力  2:当日の値洗い  3:保有銘柄残高一覧の表示  4:終了\n");
+      System.out.println("1:売買取引  2:当日の値洗い  3:保有銘柄残高一覧の表示  4:当日取引の取り消し 5:締め処理 6:終了\n");
       System.out.print("メニューを選択してください>");
 
       try {
@@ -52,11 +54,19 @@ public class BondManagementSystem {
          ebl.execute();
          break;
         case 4:
+         //当日取引の取り消し
+         ct.execute();
+         break;
+        case 5:
+         //締め処理
+         //ebl.execute();
+         break;
+        case 6:
          break;
         default:
-         System.out.println("\n1-4の数字で指定してください。");
+         System.out.println("\n1-6の数字で指定してください。");
          break;
       }
-    } while(menueNum != 4);
+    } while(menueNum != 6);
   }
 }
