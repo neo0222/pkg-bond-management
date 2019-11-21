@@ -36,6 +36,6 @@ public class Trade {
 
   @Override
   public String toString() {
-    return code + "," + tradeType + "," + price + "," + amount;
+    return this.code + "," + this.tradeType + "," + this.price + "," + this.amount;
   }
 }

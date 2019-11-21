@@ -42,6 +42,6 @@ public class Balance {
 
   @Override
   public String toString() {
-    return code + "," + amount + "," + bookValue + "," + currentPrice;
+    return this.code + "," + this.amount + "," + this.bookValue + "," + this.currentPrice;
   }
 }

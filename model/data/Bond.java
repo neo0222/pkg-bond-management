@@ -44,6 +44,6 @@ public class Bond {
 
   @Override
   public String toString() {
-    return code + "," + name + "," + rate + "," + maturity + "," + coupon;
+    return this.code + "," + this.name + "," + this.rate + "," + this.maturity + "," + this.coupon;
   }
 }
