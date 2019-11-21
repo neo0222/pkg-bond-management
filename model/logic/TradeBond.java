@@ -56,7 +56,7 @@ public class TradeBond {
           continue;
         }
         //売りの場合でその銘柄を持っていない場合はエラーを表示
-        if(typeId == 0 && !this.balanceDao.isExistBond(code)) {
+        if(typeId == 0 && !this.balanceDao.isExistBalance(code)) {
           System.out.println("この銘柄を持っていないため、売ることはできません。");
           continue;
         }
@@ -83,7 +83,7 @@ public class TradeBond {
         //実現損益
         BigDecimal realizedProfit = null;
         //指定のコードの銘柄を保有しているか確認
-        if(this.balanceDao.isExistBond(code)) { //保有しているときの処理
+        if(this.balanceDao.isExistBalance(code)) { //保有しているときの処理
           //銘柄の保有数量と簿価を取得
           Balance balance = this.balanceDao.getBalanceData(code);
           BigDecimal oldAmount = balance.getAmount();

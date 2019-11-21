@@ -29,7 +29,7 @@ public class CloseTrade {
     */
   public void execute() {
     //取引データがない場合はエラーを表示
-    if(!this.tradeDao.isExsistTradeData()) {
+    if(!this.tradeDao.isExistTradeData()) {
       System.out.println("前日の取引の締め処理は完了しています。");
       return;
     }
@@ -46,7 +46,7 @@ public class CloseTrade {
         tradeAmount = BigDecimal.valueOf(0).subtract(tradeAmount);
       }
 
-      if(this.settledBalanceDao.isExistBond(code)) { //指定コードの銘柄をすでに保有している場合
+      if(this.settledBalanceDao.isExistBalance(code)) { //指定コードの銘柄をすでに保有している場合
         Balance balance = this.settledBalanceDao.getBalanceData(code);
         BigDecimal oldAmount = balance.getAmount();
         BigDecimal oldBookValue = balance.getBookValue();

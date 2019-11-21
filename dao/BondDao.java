@@ -17,16 +17,18 @@ public class BondDao {
     * @return 探索する銘柄コードに等しい銘柄が存在すればtrue
     */
   public boolean isExistBond(String code) {
+    boolean result = false;
     BufferedReader br = null;
     try {
       br = new BufferedReader(new FileReader(this.filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
-        String[] bond = line.split(",",-1);
+        String[] bondData = line.split(",", -1);
         //一致する銘柄があったときの処理
-        if(bond[0].equals(code)) {
-          return true;
+        if(bondData[0].equals(code)) {
+          result = true;
+          break;
         }
       }
     } catch(IOException e) {
@@ -40,7 +42,7 @@ public class BondDao {
         }
       }
     }
-    return false;
+    return result;
   }
   /**
     *銘柄のコードを探索し、情報を取り出すメソッド
@@ -55,11 +57,11 @@ public class BondDao {
 
       String line = null;
       while((line = br.readLine()) != null) {
-        String[] bondData = line.split(",",-1);
+        String[] bondData = line.split(",", -1);
         //一致する銘柄があったときの処理
         if(bondData[0].equals(code)) {
           bond = new Bond(code, bondData[1], new BigDecimal(bondData[2]), Integer.parseInt(bondData[3]), Integer.parseInt(bondData[4]));
-          return bond;
+          break;
         }
       }
     } catch(IOException e) {
@@ -73,6 +75,6 @@ public class BondDao {
         }
       }
     }
-    return null;
+    return bond;
   }
 }

@@ -23,7 +23,7 @@ public class TradeDao {
     *取引ファイルが存在するか確認するメソッド
     * @return 取引ファイルが存在すればtrue
     */
-  public boolean isExsistTradeData() {
+  public boolean isExistTradeData() {
     return Files.exists(path);
   }
   /**
@@ -43,16 +43,18 @@ public class TradeDao {
     * @return 探索する銘柄コードの取引が存在すればtrue
     */
   public boolean isExistTrade(String code) {
+    boolean result = false;
     BufferedReader br = null;
     try {
       br = new BufferedReader(new FileReader(this.filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
-        String[] bond = line.split(",",-1);
+        String[] tradeData = line.split(",", -1);
         //一致する銘柄があったときの処理
-        if(bond[0].equals(code)) {
-          return true;
+        if(tradeData[0].equals(code)) {
+          result = true;
+          break;
         }
       }
     } catch(IOException e) {
@@ -66,27 +68,30 @@ public class TradeDao {
         }
       }
     }
-    return false;
+    return result;
   }
   /**
     *取引ファイルに新たな銘柄を追加するメソッド
     * @param trade 銘柄コード・売買・取引価格・取引数量の情報
     */
   public void putTradeData(Trade trade) {
-    List<Trade> tradeList = null;
-    if(this.isExsistTradeData()) { //取引一覧ファイルが存在するときの処理
-      //取引の一覧を取得
-      tradeList = this.getTradeList();
+    PrintWriter pw = null;
+    try {
+      pw = new PrintWriter(new FileWriter(this.filePath,true));
+      //銘柄残高ファイルの末尾に書き込み
+      pw.println(trade.toString());
 
-    } else { //取引一覧ファイルが存在しないときの処理
-      tradeList = new ArrayList<>();
+    } catch(IOException e) {
+      System.out.println(e);
+    } finally {
+      if(pw != null) {
+        try {
+          pw.close();
+        } catch(Exception e2) {
+          System.out.println(e2);
+        }
+      }
     }
-
-    //取引一覧の末尾に取引を追加
-    tradeList.add(trade);
-
-    //ファイルに書き込み
-    this.writeTradeData(tradeList);
   }
   /**
     *取引ファイルから１行ずつリストに格納し返すメソッド
@@ -122,9 +127,8 @@ public class TradeDao {
   /**
     *リストから１行ずつ取引ファイルに書き込むメソッド
     * @param tradeList 取引のリスト
-    * @return 処理が成功するとtrue失敗するとfalse
     */
-  public boolean writeTradeData(List<Trade> tradeList) {
+  public void writeTradeData(List<Trade> tradeList) {
     PrintWriter pw = null;
     try {
       pw = new PrintWriter(new FileWriter(this.filePath,false));
@@ -132,8 +136,6 @@ public class TradeDao {
       for(Trade trade : tradeList) {
         pw.println(trade.toString());
       }
-
-      return true;
     } catch(IOException e) {
       System.out.println(e);
     } finally {
@@ -145,6 +147,5 @@ public class TradeDao {
         }
       }
     }
-    return false;
   }
 }

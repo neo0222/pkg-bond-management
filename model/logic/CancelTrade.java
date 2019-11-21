@@ -26,7 +26,7 @@ public class CancelTrade {
     */
   public void execute() {
     //取引データがない場合はエラーを表示
-    if(!this.tradeDao.isExsistTradeData()) {
+    if(!this.tradeDao.isExistTradeData()) {
       System.out.println("当日の取引はありません。");
       return;
     }
@@ -51,7 +51,7 @@ public class CancelTrade {
       List<Integer> tradeNums = new ArrayList<>();
       //取引によって保有数量がマイナスにならないか確認するための数量
       BigDecimal amount = null;
-      if(this.settledBalanceDao.isExistBond(code)) {
+      if(this.settledBalanceDao.isExistBalance(code)) {
         amount = this.settledBalanceDao.getBalanceData(code).getAmount();
       } else {
         amount = BigDecimal.valueOf(0);
