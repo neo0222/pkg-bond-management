@@ -11,7 +11,7 @@ import model.data.Balance;
   */
 public class BalanceDao {
   /** 銘柄暫定残高ファイルパス */
-  private final String filePath = "csv/balancedata.csv";
+  private static final String filePath = "csv/balancedata.csv";
   /**
     *銘柄のコードの保有数量と簿価を取り出すメソッド
     * @param code　探索する銘柄コード

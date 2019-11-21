@@ -15,7 +15,7 @@ import model.data.TradeType;
   */
 public class TradeDao {
   /** 取引ファイルパス */
-  private final String filePath = "csv/tradedata.csv";
+  private static final String filePath = "csv/tradedata.csv";
   /** 取引ファイルの存在自体を操作するためのPathインスタンス */
   private Path path = Paths.get(this.filePath);
 

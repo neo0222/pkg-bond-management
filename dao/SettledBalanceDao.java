@@ -11,7 +11,7 @@ import model.data.Balance;
   */
 public class SettledBalanceDao {
   /** 銘柄の確定残高ファイルパス */
-  private final String filePath = "csv/settledbalancedata.csv";
+  private static final String filePath = "csv/settledbalancedata.csv";
   /**
     *銘柄のコードの保有数量と簿価を取り出すメソッド
     * @param code　探索する銘柄コード

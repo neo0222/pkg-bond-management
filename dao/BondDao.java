@@ -10,7 +10,7 @@ import model.data.Bond;
   */
 public class BondDao {
   /** マスターファイルパス */
-  private final String filePath = "csv/masterdata.csv";
+  private static final String filePath = "csv/masterdata.csv";
   /**
     *探索する銘柄コードと一致する銘柄の有無を確認するメソッド
     * @param code　探索する銘柄コード
