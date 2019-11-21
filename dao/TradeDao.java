@@ -27,6 +27,17 @@ public class TradeDao {
     return Files.exists(path);
   }
   /**
+    *取引ファイルが存在するか確認するメソッド
+    * @return 取引ファイルが存在すればtrue
+    */
+  public void deleteTradeData() {
+    try {
+      Files.delete(path);
+    } catch(IOException e) {
+      System.out.println(e);
+    }
+  }
+  /**
     *探索する銘柄コードと一致する銘柄の取引の有無を確認するメソッド
     * @param code　探索する銘柄コード
     * @return 探索する銘柄コードの取引が存在すればtrue

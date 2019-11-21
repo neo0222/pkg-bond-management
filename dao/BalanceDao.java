@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 
 import model.data.Balance;
 /**
-  *銘柄残高ファイルに関する処理をするクラス。
+  *表示用の銘柄暫定残高ファイルに関する処理をするクラス。
   */
 public class BalanceDao {
-  /** 銘柄残高ファイルパス */
+  /** 銘柄暫定残高ファイルパス */
   private final String filePath = "csv/balancedata.csv";
   /**
     *銘柄のコードの保有数量と簿価を取り出すメソッド

@@ -16,7 +16,7 @@ import model.data.TradeType;
   *取引データを取り消す処理をするクラス。
   */
 public class CancelTrade {
-  /** 残高データのDAO　*/
+  /** 確定残高データのDAO　*/
   private SettledBalanceDao settledBalanceDao = new SettledBalanceDao();
   /** 取引データのDAO　*/
   private TradeDao tradeDao = new TradeDao();

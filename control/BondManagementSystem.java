@@ -5,6 +5,7 @@ import model.logic.TradeBond;
 import model.logic.UpdateBond;
 import model.logic.ExportBondList;
 import model.logic.CancelTrade;
+import model.logic.CloseTrade;
 
 
 public class BondManagementSystem {
@@ -13,7 +14,8 @@ public class BondManagementSystem {
     TradeBond ib = new TradeBond();
     UpdateBond ub = new UpdateBond();
     ExportBondList ebl = new ExportBondList();
-    CancelTrade ct = new CancelTrade();
+    CancelTrade cat = new CancelTrade();
+    CloseTrade clt = new CloseTrade();
 
     System.out.println("------ 債権の在庫管理システム ------");
 
@@ -55,11 +57,11 @@ public class BondManagementSystem {
          break;
         case 4:
          //当日取引の取り消し
-         ct.execute();
+         cat.execute();
          break;
         case 5:
          //締め処理
-         //ebl.execute();
+         clt.execute();
          break;
         case 6:
          break;
