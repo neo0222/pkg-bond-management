@@ -45,7 +45,7 @@ public class TradeDao {
   public boolean isExistTrade(String code) {
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader(filePath));
+      br = new BufferedReader(new FileReader(this.filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
@@ -97,7 +97,7 @@ public class TradeDao {
 
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader(filePath));
+      br = new BufferedReader(new FileReader(this.filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
@@ -127,7 +127,7 @@ public class TradeDao {
   public boolean writeTradeData(List<Trade> tradeList) {
     PrintWriter pw = null;
     try {
-      pw = new PrintWriter(new FileWriter(filePath,false));
+      pw = new PrintWriter(new FileWriter(this.filePath,false));
       //銘柄残高ファイルに書き込み
       for(Trade trade : tradeList) {
         pw.println(trade.toString());

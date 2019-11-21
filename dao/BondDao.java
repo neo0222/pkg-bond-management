@@ -19,7 +19,7 @@ public class BondDao {
   public boolean isExistBond(String code) {
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader(filePath));
+      br = new BufferedReader(new FileReader(this.filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
@@ -51,7 +51,7 @@ public class BondDao {
     Bond bond = null;
     BufferedReader br = null;
     try {
-      br = new BufferedReader(new FileReader(filePath));
+      br = new BufferedReader(new FileReader(this.filePath));
 
       String line = null;
       while((line = br.readLine()) != null) {
