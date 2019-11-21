@@ -26,7 +26,7 @@ public class CancelTrade {
     */
   public void execute() {
     //取引データがない場合はエラーを表示
-    if(!tradeDao.isExsistTradeData()) {
+    if(!this.tradeDao.isExsistTradeData()) {
       System.out.println("当日の取引はありません。");
       return;
     }
@@ -40,19 +40,19 @@ public class CancelTrade {
       String code = br.readLine();
 
       //探索するコードの銘柄の取引データがない場合はエラーを表示
-      if(!tradeDao.isExistTrade(code)) {
+      if(!this.tradeDao.isExistTrade(code)) {
         System.out.println("銘柄コード " + code + " の取引はありません。");
         return;
       }
 
       //取引データの一覧を取得
-      List<Trade> tradeList = tradeDao.getTradeList();
+      List<Trade> tradeList = this.tradeDao.getTradeList();
       //取り消す銘柄コードの取引データリスト中の番号リスト
       List<Integer> tradeNums = new ArrayList<>();
       //取引によって保有数量がマイナスにならないか確認するための数量
       BigDecimal amount = null;
-      if(settledBalanceDao.isExistBond(code)) {
-        amount = settledBalanceDao.getBalanceData(code).getAmount();
+      if(this.settledBalanceDao.isExistBond(code)) {
+        amount = this.settledBalanceDao.getBalanceData(code).getAmount();
       } else {
         amount = BigDecimal.valueOf(0);
       }
@@ -102,11 +102,12 @@ public class CancelTrade {
       //保有数量がマイナスならエラーを表示
       if(amount.compareTo(BigDecimal.valueOf(0)) == -1) {
         System.out.println("保有数量がマイナスになってしまいます。");
+        return;
       }
       //取引リストから選択された取引を取り消す
       tradeList.remove(cancelNum);
       //取引リストに書き込む
-      tradeDao.writeTradeData(tradeList);
+      this.tradeDao.writeTradeData(tradeList);
 
     } catch(IOException e) {
       System.out.println(e);

@@ -29,12 +29,12 @@ public class CloseTrade {
     */
   public void execute() {
     //取引データがない場合はエラーを表示
-    if(!tradeDao.isExsistTradeData()) {
+    if(!this.tradeDao.isExsistTradeData()) {
       System.out.println("前日の取引の締め処理は完了しています。");
       return;
     }
     //前日の取引一覧を取得
-    List<Trade> tradeList = tradeDao.getTradeList();
+    List<Trade> tradeList = this.tradeDao.getTradeList();
 
     for(Trade trade : tradeList) {
       String code = trade.getCode();
@@ -46,8 +46,8 @@ public class CloseTrade {
         tradeAmount = BigDecimal.valueOf(0).subtract(tradeAmount);
       }
 
-      if(settledBalanceDao.isExistBond(code)) { //指定コードの銘柄をすでに保有している場合
-        Balance balance = settledBalanceDao.getBalanceData(code);
+      if(this.settledBalanceDao.isExistBond(code)) { //指定コードの銘柄をすでに保有している場合
+        Balance balance = this.settledBalanceDao.getBalanceData(code);
         BigDecimal oldAmount = balance.getAmount();
         BigDecimal oldBookValue = balance.getBookValue();
 
@@ -68,7 +68,7 @@ public class CloseTrade {
         balance.setBookValue(newBookValue);
         this.settledBalanceDao.updateBalanceData(balance);
 
-      } else { //指定コードの銘柄をすでに保有していない場合
+      } else { //指定コードの銘柄をまだ保有していない場合
         if(tradeAmount.compareTo(BigDecimal.valueOf(1)) == -1) {
           tradePrice = BigDecimal.valueOf(0);
         }
@@ -77,7 +77,7 @@ public class CloseTrade {
       }
     }
     //保有量が０の銘柄の残高情報は削除する
-    List<Balance> balanceList = settledBalanceDao.getBalanceList();
+    List<Balance> balanceList = this.settledBalanceDao.getBalanceList();
     while(true) {
       //保有量が０の銘柄がなければtrue
       boolean isNoZero = true;
@@ -94,11 +94,10 @@ public class CloseTrade {
       }
     }
     //確定残高リストを更新
-    settledBalanceDao.writeBalanceData(balanceList);
+    this.settledBalanceDao.writeBalanceData(balanceList);
     //暫定残高リストを更新
-    balanceDao.writeBalanceData(balanceList);
-
+    this.balanceDao.writeBalanceData(balanceList);
     //取引リストの削除
-    tradeDao.deleteTradeData();
+    this.tradeDao.deleteTradeData();
   }
 }
