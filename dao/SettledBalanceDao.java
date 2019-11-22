@@ -28,7 +28,7 @@ public class SettledBalanceDao {
         String[] balanceData = line.split(",", -1);
         //一致する銘柄に対する処理
         if(balanceData[0].equals(code)) {
-          balance = new Balance(code, new BigDecimal(balanceData[1]),new BigDecimal(balanceData[2]));
+          balance = new Balance(code, new BigDecimal(balanceData[1]), new BigDecimal(balanceData[2]));
           break;
         }
       }

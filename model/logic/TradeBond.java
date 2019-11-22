@@ -76,7 +76,7 @@ public class TradeBond {
 
         //計算のために取引が「売り」の場合は数量をマイナスにする
         if(tradeType == TradeType.SELL) {
-          tradeAmount = BigDecimal.valueOf(0).subtract(tradeAmount);
+          tradeAmount = tradeAmount.negate();
         }
 
         //銘柄残高ファイルへの書き込み・実現損益の計算
@@ -93,15 +93,15 @@ public class TradeBond {
           BigDecimal newAmount = oldAmount.add(tradeAmount);
 
           //保有数量が0未満ならエラーを表示
-          if(newAmount.compareTo(BigDecimal.valueOf(0)) == -1) {
+          if(newAmount.compareTo(BigDecimal.ZERO) == -1) {
             System.out.println("保有数量がマイナスになってしまいます。");
             continue;
           }
 
           //簿価の更新
           BigDecimal newBookValue = null;
-          if(newAmount.equals(BigDecimal.valueOf(0))) {
-            newBookValue = BigDecimal.valueOf(0);
+          if(newAmount.equals(BigDecimal.ZERO)) {
+            newBookValue = BigDecimal.ZERO;
           } else {
             newBookValue = (oldAmount.multiply(oldBookValue).add(tradeAmount.multiply(tradePrice)))
                                     .divide(newAmount,3,BigDecimal.ROUND_DOWN);
@@ -113,15 +113,9 @@ public class TradeBond {
           this.balanceDao.updateBalanceData(balance);
 
           //実現損益の計算
-          realizedProfit = tradePrice.subtract(oldBookValue).multiply(BigDecimal.valueOf(0).subtract(tradeAmount));
+          realizedProfit = tradePrice.subtract(oldBookValue).multiply(tradeAmount.negate());
 
         } else { //保有していないときの処理
-          //保有数量が0未満ならエラーを表示
-          // if(tradeAmount.compareTo(BigDecimal.valueOf(0)) == -1) {
-          //   System.out.println("保有数量がマイナスです。");
-          //   continue;
-          // }
-
           Balance balance = new Balance(code, tradeAmount, tradePrice);
           this.balanceDao.putBalanceData(balance);
         }

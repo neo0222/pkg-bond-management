@@ -54,7 +54,7 @@ public class CancelTrade {
       if(this.settledBalanceDao.isExistBalance(code)) {
         amount = this.settledBalanceDao.getBalanceData(code).getAmount();
       } else {
-        amount = BigDecimal.valueOf(0);
+        amount = BigDecimal.ZERO;
       }
 
       //選択した銘柄コードの取引リストを表示、番号リストの取得、保有数量の計算
@@ -100,7 +100,7 @@ public class CancelTrade {
       }
 
       //保有数量がマイナスならエラーを表示
-      if(amount.compareTo(BigDecimal.valueOf(0)) == -1) {
+      if(amount.compareTo(BigDecimal.ZERO) == -1) {
         System.out.println("保有数量がマイナスになってしまいます。");
         return;
       }

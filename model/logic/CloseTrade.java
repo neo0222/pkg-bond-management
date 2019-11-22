@@ -43,7 +43,7 @@ public class CloseTrade {
       BigDecimal tradeAmount = trade.getAmount();
 
       if(tradeType == TradeType.SELL) { //取引が売りの場合は取引数量をマイナスにする
-        tradeAmount = BigDecimal.valueOf(0).subtract(tradeAmount);
+        tradeAmount = tradeAmount.negate();
       }
 
       if(this.settledBalanceDao.isExistBalance(code)) { //指定コードの銘柄をすでに保有している場合
@@ -56,8 +56,8 @@ public class CloseTrade {
 
         //簿価の更新
         BigDecimal newBookValue = null;
-        if(newAmount.compareTo(BigDecimal.valueOf(1)) == -1) {
-          newBookValue = BigDecimal.valueOf(0);
+        if(newAmount.compareTo(BigDecimal.ONE) == -1) {
+          newBookValue = BigDecimal.ZERO;
         } else {
           newBookValue = (oldAmount.multiply(oldBookValue).add(tradeAmount.multiply(tradePrice)))
                                   .divide(newAmount,3,BigDecimal.ROUND_DOWN);
@@ -69,8 +69,8 @@ public class CloseTrade {
         this.settledBalanceDao.updateBalanceData(balance);
 
       } else { //指定コードの銘柄をまだ保有していない場合
-        if(tradeAmount.compareTo(BigDecimal.valueOf(1)) == -1) {
-          tradePrice = BigDecimal.valueOf(0);
+        if(tradeAmount.compareTo(BigDecimal.ONE) == -1) {
+          tradePrice = BigDecimal.ZERO;
         }
         Balance balance = new Balance(code, tradeAmount, tradePrice);
         this.settledBalanceDao.putBalanceData(balance);
@@ -83,7 +83,7 @@ public class CloseTrade {
       boolean isNoZero = true;
       for(int i = 0; i < balanceList.size(); i++) {
         Balance balance = balanceList.get(i);
-        if(balance.getAmount().equals(BigDecimal.valueOf(0))) {
+        if(balance.getAmount().equals(BigDecimal.ZERO)) {
           balanceList.remove(i);
           isNoZero = false;
           break;
