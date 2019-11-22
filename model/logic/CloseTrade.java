@@ -4,6 +4,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import dao.BalanceDao;
 import dao.SettledBalanceDao;
@@ -78,21 +79,14 @@ public class CloseTrade {
     }
     //保有量が０の銘柄の残高情報は削除する
     List<Balance> balanceList = this.settledBalanceDao.getBalanceList();
-    while(true) {
-      //保有量が０の銘柄がなければtrue
-      boolean isNoZero = true;
-      for(int i = 0; i < balanceList.size(); i++) {
-        Balance balance = balanceList.get(i);
-        if(balance.getAmount().equals(BigDecimal.ZERO)) {
-          balanceList.remove(i);
-          isNoZero = false;
-          break;
-        }
-      }
-      if(isNoZero) {
-        break;
+    Iterator<Balance> balanceIterator = balanceList.iterator();
+    while(balanceIterator.hasNext()) {
+      Balance balance = balanceIterator.next();
+      if(balance.getAmount().equals(BigDecimal.ZERO)) {
+        balanceIterator.remove();
       }
     }
+
     //確定残高リストを更新
     this.settledBalanceDao.writeBalanceData(balanceList);
     //暫定残高リストを更新
