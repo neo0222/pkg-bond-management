@@ -30,10 +30,10 @@ public class Balance {
   }
 
   //ゲッター
-  public String getCode() { return code; }
-  public BigDecimal getAmount() { return amount; }
-  public BigDecimal getBookValue() { return bookValue; }
-  public BigDecimal getCurrentPrice() { return currentPrice; }
+  public String getCode() { return this.code; }
+  public BigDecimal getAmount() { return this.amount; }
+  public BigDecimal getBookValue() { return this.bookValue; }
+  public BigDecimal getCurrentPrice() { return this.currentPrice; }
 
   //セッター
   public void setAmount(BigDecimal amount) { this.amount = amount; }

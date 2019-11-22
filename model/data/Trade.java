@@ -29,10 +29,10 @@ public class Trade {
     this.amount = amount;
   }
 
-  public String getCode() { return code; }
-  public TradeType getTradeType() { return tradeType; }
-  public BigDecimal getPrice() { return price; }
-  public BigDecimal getAmount() { return amount; }
+  public String getCode() { return this.code; }
+  public TradeType getTradeType() { return this.tradeType; }
+  public BigDecimal getPrice() { return this.price; }
+  public BigDecimal getAmount() { return this.amount; }
 
   @Override
   public String toString() {
