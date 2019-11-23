@@ -59,6 +59,8 @@ public class CloseTrade {
         BigDecimal newBookValue = null;
         if(newAmount.compareTo(BigDecimal.ONE) == -1) {
           newBookValue = BigDecimal.ZERO;
+        } else if(tradeAmount.compareTo(BigDecimal.ZERO) == -1) { //売りのときは簿価は変わらない
+          newBookValue = oldBookValue;
         } else {
           newBookValue = (oldAmount.multiply(oldBookValue).add(tradeAmount.multiply(tradePrice)))
                                   .divide(newAmount,3,BigDecimal.ROUND_DOWN);

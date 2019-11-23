@@ -102,6 +102,8 @@ public class TradeBond {
           BigDecimal newBookValue = null;
           if(newAmount.equals(BigDecimal.ZERO)) {
             newBookValue = BigDecimal.ZERO;
+          } else if(tradeAmount.compareTo(BigDecimal.ZERO) == -1) { //売りの場合は簿価は変わらない
+            newBookValue = oldBookValue;
           } else {
             newBookValue = (oldAmount.multiply(oldBookValue).add(tradeAmount.multiply(tradePrice)))
                                     .divide(newAmount,3,BigDecimal.ROUND_DOWN);
