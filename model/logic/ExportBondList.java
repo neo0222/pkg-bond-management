@@ -45,7 +45,7 @@ public class ExportBondList {
       int coupon = masterData.getCoupon();
 
       String bond = null;
-      if(currentPrice.compareTo(BigDecimal.valueOf(0)) == 0) {
+      if(currentPrice.compareTo(BigDecimal.ZERO) == 0) {
         bond = String.format("|%-12s|%-15s|%10d|%8s|%12d|%8s|%15s|%15s|%12s|",
           code, name, maturity, rate.toString(), coupon, amount.toString(), bookValue.toString(), "#N/A", "#N/A");
       } else {
