@@ -19,10 +19,10 @@ public class Trade {
   public Trade(String code, TradeType tradeType, BigDecimal price, BigDecimal amount) {
     this.code = code;
     this.tradeType = tradeType;
-    if(price.compareTo(BigDecimal.valueOf(0)) == -1) {
+    if(price.compareTo(BigDecimal.ZERO) == -1) {
 			throw new IllegalArgumentException("価格は０以上で指定してください。");
 		}
-    if(amount.compareTo(BigDecimal.valueOf(0)) == -1) {
+    if(amount.compareTo(BigDecimal.ZERO) == -1) {
 			throw new IllegalArgumentException("数量は０以上で指定してください。");
 		}
     this.price = price;

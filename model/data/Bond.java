@@ -28,7 +28,7 @@ public class Bond {
 		if(coupon < 0) {
 			throw new IllegalArgumentException("クーポン回数が不正。");
 		}
-		if(rate.compareTo(BigDecimal.valueOf(0)) == -1) {
+		if(rate.compareTo(BigDecimal.ZERO) == -1) {
 			throw new IllegalArgumentException("利率が不正。");
 		}
     this.rate = rate;
