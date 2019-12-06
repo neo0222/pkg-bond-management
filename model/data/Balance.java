@@ -20,7 +20,7 @@ public class Balance {
     this.code = code;
     this.amount = amount;
     this.bookValue = bookValue;
-    this.currentPrice = BigDecimal.valueOf(0);
+    this.currentPrice = BigDecimal.ONE.negate();
   }
   public Balance(String code, BigDecimal amount,BigDecimal bookValue, BigDecimal currentPrice) {
     this.code = code;
@@ -30,10 +30,10 @@ public class Balance {
   }
 
   //ゲッター
-  public String getCode() { return code; }
-  public BigDecimal getAmount() { return amount; }
-  public BigDecimal getBookValue() { return bookValue; }
-  public BigDecimal getCurrentPrice() { return currentPrice; }
+  public String getCode() { return this.code; }
+  public BigDecimal getAmount() { return this.amount; }
+  public BigDecimal getBookValue() { return this.bookValue; }
+  public BigDecimal getCurrentPrice() { return this.currentPrice; }
 
   //セッター
   public void setAmount(BigDecimal amount) { this.amount = amount; }
@@ -42,6 +42,6 @@ public class Balance {
 
   @Override
   public String toString() {
-    return getCode() + "," + getAmount() + "," + getBookValue() + "," + getCurrentPrice();
+    return this.code + "," + this.amount + "," + this.bookValue + "," + this.currentPrice;
   }
 }

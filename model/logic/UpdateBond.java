@@ -2,6 +2,7 @@ package model.logic;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -27,8 +28,7 @@ public class UpdateBond {
     List<Balance> balanceList = this.balanceDao.getBalanceList();
 
     //1つずつ銘柄の時価を入力する
-    for(int i = 0; i < balanceList.size(); i++) {
-      Balance balance = balanceList.get(i);
+    for(Balance balance : balanceList) {
       //銘柄コードを取得
       String code = balance.getCode();
       //銘柄名を取得
@@ -44,9 +44,7 @@ public class UpdateBond {
         System.out.print("時価>");
         BigDecimal currentPrice = new BigDecimal(br.readLine());
         //時価を銘柄情報に設定する
-        balance.setCurrentPrice(currentPrice);
-
-        balanceList.set(i, balance);
+        balance.setCurrentPrice(currentPrice.setScale(3, RoundingMode.FLOOR));
 
       } catch(IOException e) {
         System.out.println(e);

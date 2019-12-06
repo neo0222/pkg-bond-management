@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 
 import model.data.Balance;
 /**
-  *表示用の銘柄暫定残高ファイルに関する処理をするクラス。
+  *銘柄の確定残高ファイルに関する処理をするクラス。
   */
-public class BalanceDao {
-  /** 銘柄暫定残高ファイルパス */
-  private static final String filePath = "csv/balancedata.csv";
+public class SettledBalanceDao {
+  /** 銘柄の確定残高ファイルパス */
+  private static final String filePath = "csv/settledbalancedata.csv";
   /**
     *銘柄のコードの保有数量と簿価を取り出すメソッド
     * @param code　探索する銘柄コード
@@ -95,7 +95,7 @@ public class BalanceDao {
     this.writeBalanceData(balanceList);
   }
   /**
-    *銘柄残高ファイルに新たな銘柄を追加するメソッド
+    *銘柄確定残高ファイルに新たな銘柄を追加するメソッド
     * @param balance 銘柄コード・保有数量・簿価・時価の情報
     */
   public void putBalanceData(Balance balance) {
@@ -118,8 +118,8 @@ public class BalanceDao {
     }
   }
   /**
-    *銘柄残高ファイルから１行ずつリストに格納し返すメソッド
-    * @return 銘柄残高ファイルにある銘柄情報リスト
+    *銘柄確定残高ファイルから１行ずつリストに格納し返すメソッド
+    * @return 銘柄確定残高ファイルにある銘柄情報リスト
     */
   public List<Balance> getBalanceList() {
     List<Balance> balanceList = new ArrayList<>();
@@ -149,7 +149,7 @@ public class BalanceDao {
     return balanceList;
   }
   /**
-    *リストから１行ずつ銘柄残高ファイルに書き込むメソッド
+    *リストから１行ずつ銘柄確定残高ファイルに書き込むメソッド
     * @param balanceList 銘柄の残高情報
     */
   public void writeBalanceData(List<Balance> balanceList) {
@@ -173,9 +173,9 @@ public class BalanceDao {
     }
   }
   /**
-    *指定した銘柄コードの銘柄情報が銘柄残高ファイルの何行目にあるか返すメソッド
+    *指定した銘柄コードの銘柄情報が銘柄確定残高ファイルの何行目にあるか返すメソッド
     * @param code 探索する銘柄コード
-    * @return 探索する銘柄コードと同じ銘柄情報が銘柄残高ファイルの何行目にあるか
+    * @return 探索する銘柄コードと同じ銘柄情報が銘柄確定残高ファイルの何行目にあるか
     */
   private int getRowNumber(String code) {
     int rowNumber = 0;
