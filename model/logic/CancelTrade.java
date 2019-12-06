@@ -2,6 +2,7 @@ package model.logic;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -65,8 +66,8 @@ public class CancelTrade {
         if(trade.getCode().equals(code)) {
           tradeNums.add(i);
           System.out.printf("|%8d|%-5s|%10s|%10s|\n", i, trade.getTradeType().toString(),
-                  trade.getPrice().setScale(3, BigDecimal.ROUND_DOWN).toString(),
-                  trade.getAmount().setScale(3, BigDecimal.ROUND_DOWN).toString());
+                  trade.getPrice().setScale(3, RoundingMode.FLOOR).toString(),
+                  trade.getAmount().setScale(3, RoundingMode.FLOOR).toString());
           //保有数量の計算（買いなら加算、売りなら減算）
           if(trade.getTradeType() == TradeType.BUY) {
             amount = amount.add(trade.getAmount());

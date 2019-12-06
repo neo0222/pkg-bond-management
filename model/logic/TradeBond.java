@@ -2,6 +2,7 @@ package model.logic;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import dao.BondDao;
 import dao.BalanceDao;
@@ -106,7 +107,7 @@ public class TradeBond {
             newBookValue = oldBookValue;
           } else {
             newBookValue = (oldAmount.multiply(oldBookValue).add(tradeAmount.multiply(tradePrice)))
-                                    .divide(newAmount,3,BigDecimal.ROUND_DOWN);
+                                    .divide(newAmount, 3, RoundingMode.FLOOR);
           }
 
           //銘柄残高ファイル上の保有数量と簿価の更新

@@ -2,6 +2,7 @@ package model.logic;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class ExportBondList {
           code, name, maturity, rate.toString(), coupon, amount.toString(), bookValue.toString(), "#N/A", "#N/A");
       } else {
         //評価損益の計算
-        BigDecimal valuationPL = currentPrice.subtract(bookValue).multiply(amount).setScale(0, BigDecimal.ROUND_DOWN);
+        BigDecimal valuationPL = currentPrice.subtract(bookValue).multiply(amount).setScale(0, RoundingMode.FLOOR);
 
         bond = String.format("|%-12s|%-15s|%10d|%8s|%12d|%8s|%15s|%15s|%12s|",
                   code, name, maturity, rate.toString(), coupon, amount.toString(),

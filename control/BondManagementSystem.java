@@ -43,8 +43,11 @@ public class BondManagementSystem {
 
       //メニューによる分岐
       switch(menuNum) {
+        case 0:
+         //入力がint型以外の場合は何も処理しない
+         break;
         case 1:
-         //在庫データの入力
+         //売買取引
          ib.execute();
          break;
         case 2:
