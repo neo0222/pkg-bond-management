@@ -2,6 +2,7 @@ package model.logic;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -43,7 +44,7 @@ public class UpdateBond {
         System.out.print("時価>");
         BigDecimal currentPrice = new BigDecimal(br.readLine());
         //時価を銘柄情報に設定する
-        balance.setCurrentPrice(currentPrice);
+        balance.setCurrentPrice(currentPrice.setScale(3, RoundingMode.FLOOR));
 
       } catch(IOException e) {
         System.out.println(e);

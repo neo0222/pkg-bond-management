@@ -20,7 +20,7 @@ public class Balance {
     this.code = code;
     this.amount = amount;
     this.bookValue = bookValue;
-    this.currentPrice = BigDecimal.ZERO;
+    this.currentPrice = BigDecimal.ONE.negate();
   }
   public Balance(String code, BigDecimal amount,BigDecimal bookValue, BigDecimal currentPrice) {
     this.code = code;

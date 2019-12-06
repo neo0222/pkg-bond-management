@@ -76,7 +76,7 @@ public class CloseTrade {
         if(tradeAmount.compareTo(BigDecimal.ONE) == -1) {
           tradePrice = BigDecimal.ZERO;
         }
-        Balance balance = new Balance(code, tradeAmount, tradePrice);
+        Balance balance = new Balance(code, tradeAmount, tradePrice.setScale(3, RoundingMode.FLOOR));
         this.settledBalanceDao.putBalanceData(balance);
       }
     }

@@ -119,7 +119,7 @@ public class TradeBond {
           realizedProfit = tradePrice.subtract(oldBookValue).multiply(tradeAmount.negate());
 
         } else { //保有していないときの処理
-          Balance balance = new Balance(code, tradeAmount, tradePrice);
+          Balance balance = new Balance(code, tradeAmount, tradePrice.setScale(3, RoundingMode.FLOOR));
           this.balanceDao.putBalanceData(balance);
         }
 
