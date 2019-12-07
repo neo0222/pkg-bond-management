@@ -2,17 +2,21 @@ import java.io.*;
 import java.util.*;
 import javax.print.event.PrintJobListener;
 import java.math.*;
+import java.lang.NullPointerException;
 
 class BondDao {
+    private static final String bond_file = "bond_data.csv";
+    //対象のBondが存在するかどうかを返却するメソッド
     public boolean IsExist(String inputCode){
         try {
-            FileReader fileName = new FileReader("bond_data.csv");
+            FileReader fileName = new FileReader(bond_file);
             BufferedReader br = new BufferedReader(fileName);
 
             //読み込んだファイルを1行ずつ処理
             String line;
             while((line = br.readLine()) != null){
-                String[] bondDataStr = line.split(",", 0);
+                //空白であっても文字列として取得する
+                String[] bondDataStr = line.split(",", -1);
                 if (bondDataStr[0].equals(inputCode)){
                     br.close();
                     return true;
@@ -20,22 +24,22 @@ class BondDao {
             }
             br.close();
         } catch(IOException ex) {
-            System.out.println("ファイルが存在しません");
+            System.out.println(ex);
         }
         return false;
     }
 
     public Bond getBond(String inputCode){
         try {
-            FileReader fileName = new FileReader("bond_data.csv");
+            FileReader fileName = new FileReader(bond_file);
             BufferedReader br = new BufferedReader(fileName);
 
             //読み込んだファイルを1行ずつ処理
             String line;
 
             while((line = br.readLine()) != null){
-                String[] bondDataStr = line.split(",", 0);
-                if(bondDataStr[0] == inputCode){
+                String[] bondDataStr = line.split(",", -1);
+                if(bondDataStr[0].equals(inputCode)){
                     String code = bondDataStr[0];
                     String name = bondDataStr[1];
                     BigDecimal interestRate = new BigDecimal(bondDataStr[2]);
@@ -49,7 +53,11 @@ class BondDao {
             }
             br.close();
         } catch (IOException ie) {
-            System.out.println("ファイルが存在しません");
+            //ファイルが存在しなかった場合
+            System.out.println(ie);
+        } catch (NullPointerException ne){
+            //コンマの数が合わなかった場合
+            System.out.println(ne);
         }
         return null;
     }
@@ -57,14 +65,14 @@ class BondDao {
     public List<Bond> getBondList(){
         List<Bond> bondList = new ArrayList<Bond>();
         try {
-            FileReader fileName = new FileReader("bond_data.csv");
+            FileReader fileName = new FileReader(bond_file);
             BufferedReader br = new BufferedReader(fileName);
 
             //読み込んだファイルを1行ずつ処理
             String line;
 
             while((line = br.readLine()) != null){
-                String[] bondDataStr = line.split(",", 0);
+                String[] bondDataStr = line.split(",", -1);
 
                 //Bondを生成するために型変換を行う
                 String code = bondDataStr[0];
@@ -81,8 +89,16 @@ class BondDao {
             }
             br.close();
         } catch (IOException ie) {
-            System.out.println("ファイルが存在しません");
+            //ファイルが存在しなかった場合
+            System.out.println(ie);
         }
         return bondList;
+    }
+
+    public void showBondList(){
+        for(int i=0; i < this.getBondList().size(); i++){
+            System.out.print("  ");
+            this.getBondList().get(i).printBond();
+        }
     }
 }

@@ -49,7 +49,7 @@ class Balance {
 
     @Override
     public String toString(){
-        String str = this.code + "," + this.amount + "," + this.bookValue + ", " + this.currentValue;
+        String str = this.code + "," + this.amount + "," + this.bookValue + "," + this.currentValue;
         return str;
     }
 
