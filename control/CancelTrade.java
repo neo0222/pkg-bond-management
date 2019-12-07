@@ -1,4 +1,4 @@
-package model.logic;
+package control;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -28,7 +28,7 @@ public class CancelTrade {
   public void execute() {
     //取引データがない場合はエラーを表示
     if(!this.tradeDao.isExistTradeData()) {
-      System.out.println("当日の取引はありません。");
+      System.out.println("当日の取引はありません。\n");
       return;
     }
 

@@ -1,4 +1,4 @@
-package model.logic;
+package control;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -32,7 +32,7 @@ public class CloseTrade {
   public void execute() {
     //取引データがない場合はエラーを表示
     if(!this.tradeDao.isExistTradeData()) {
-      System.out.println("前日の取引の締め処理は完了しています。");
+      System.out.println("前日の取引の締め処理は完了しています。\n");
       return;
     }
     //前日の取引一覧を取得

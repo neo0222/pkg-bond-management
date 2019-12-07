@@ -1,4 +1,4 @@
-package model.logic;
+package control;
 
 import java.io.*;
 import java.math.BigDecimal;
