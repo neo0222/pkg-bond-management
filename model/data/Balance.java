@@ -29,13 +29,11 @@ public class Balance {
     this.currentPrice = currentPrice;
   }
 
-  //ゲッター
   public String getCode() { return this.code; }
   public BigDecimal getAmount() { return this.amount; }
   public BigDecimal getBookValue() { return this.bookValue; }
   public BigDecimal getCurrentPrice() { return this.currentPrice; }
 
-  //セッター
   public void setAmount(BigDecimal amount) { this.amount = amount; }
   public void setBookValue(BigDecimal bookValue) { this.bookValue = bookValue; }
   public void setCurrentPrice(BigDecimal currentPrice) { this.currentPrice = currentPrice; }

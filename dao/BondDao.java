@@ -6,13 +6,13 @@ import java.math.BigDecimal;
 import model.data.Bond;
 
 /**
-  *銘柄マスターデータファイルに関する処理をするクラス。
+  * 銘柄マスターデータファイルに関する処理をするクラス。
   */
 public class BondDao {
   /** マスターファイルパス */
   private static final String filePath = "csv/masterdata.csv";
   /**
-    *探索する銘柄コードと一致する銘柄の有無を確認するメソッド
+    * 探索する銘柄コードと一致する銘柄の有無を確認するメソッド
     * @param code　探索する銘柄コード
     * @return 探索する銘柄コードに等しい銘柄が存在すればtrue
     */
@@ -45,7 +45,7 @@ public class BondDao {
     return result;
   }
   /**
-    *銘柄のコードを探索し、情報を取り出すメソッド
+    * 銘柄のコードを探索し、情報を取り出すメソッド
     * @param code　探索する銘柄コード
     * @return 探索する銘柄コードに等しい銘柄のマスターデータ
     */

@@ -1,29 +1,29 @@
-package control;
+package model.logic;
 
-import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.ArrayList;
 
-import dao.BondDao;
-import dao.BalanceDao;
 import model.data.Bond;
 import model.data.Balance;
+import dao.BondDao;
+import dao.BalanceDao;
 
 /**
-  *保有銘柄残高一覧を表示するクラス
+  * 一覧表出力形式のリストを作成するlogicmodel
   */
-public class ExportBondList {
+public class ExportBondListLogic {
   /** マスターデータのDAO　*/
   private BondDao bondDao = new BondDao();
   /** 残高データのDAO　*/
   private BalanceDao balanceDao = new BalanceDao();
 
   /**
-    *保有銘柄残高一覧を表示するメソッド
+    * 一覧表の出力形式のリストを返すメソッド
+    * @return フォーマットされた文字列のリスト
     */
-  public void execute() {
+  public List<String> execute() {
     //銘柄残高情報のリストを取得
     List<Balance> balanceList = this.balanceDao.getBalanceList();
 
@@ -59,11 +59,6 @@ public class ExportBondList {
       }
       bondList.add(bond);
     }
-
-    System.out.printf("|%-7s|%-16s|%-5s|%-6s|%-5s|%-4s|%-13s|%-13s|%-8s|\n",
-              "銘柄コード", "銘柄名", "償還年月日", "利率", "クーポン回数", "保有数量", "簿価", "時価", "評価損益");
-    for(String bond : bondList) {
-      System.out.println(bond);
-    }
+    return bondList;
   }
 }

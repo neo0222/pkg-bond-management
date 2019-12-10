@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import model.data.Trade;
 import model.data.TradeType;
 /**
-  *取引ファイルに関する処理をするクラス。
+  * 取引ファイルに関する処理をするクラス。
   */
 public class TradeDao {
   /** 取引ファイルパス */
@@ -20,15 +20,14 @@ public class TradeDao {
   private Path path = Paths.get(this.filePath);
 
   /**
-    *取引ファイルが存在するか確認するメソッド
+    * 取引ファイルが存在するか確認するメソッド
     * @return 取引ファイルが存在すればtrue
     */
   public boolean isExistTradeData() {
     return Files.exists(path);
   }
   /**
-    *取引ファイルが存在するか確認するメソッド
-    * @return 取引ファイルが存在すればtrue
+    * 取引ファイルを削除するメソッド
     */
   public void deleteTradeData() {
     try {
@@ -38,7 +37,7 @@ public class TradeDao {
     }
   }
   /**
-    *探索する銘柄コードと一致する銘柄の取引の有無を確認するメソッド
+    * 探索する銘柄コードと一致する銘柄の取引の有無を確認するメソッド
     * @param code　探索する銘柄コード
     * @return 探索する銘柄コードの取引が存在すればtrue
     */
@@ -71,7 +70,7 @@ public class TradeDao {
     return result;
   }
   /**
-    *取引ファイルに新たな銘柄を追加するメソッド
+    * 取引ファイルに新たな銘柄を追加するメソッド
     * @param trade 銘柄コード・売買・取引価格・取引数量の情報
     */
   public void putTradeData(Trade trade) {
@@ -94,7 +93,7 @@ public class TradeDao {
     }
   }
   /**
-    *取引ファイルから１行ずつリストに格納し返すメソッド
+    * 取引ファイルから１行ずつリストに格納し返すメソッド
     * @return 取引ファイルにある取引リスト
     */
   public List<Trade> getTradeList() {
@@ -125,7 +124,7 @@ public class TradeDao {
     return tradeList;
   }
   /**
-    *リストから１行ずつ取引ファイルに書き込むメソッド
+    * リストから１行ずつ取引ファイルに書き込むメソッド
     * @param tradeList 取引のリスト
     */
   public void writeTradeData(List<Trade> tradeList) {

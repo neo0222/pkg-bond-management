@@ -1,24 +1,21 @@
-package control;
+package model.logic;
 
-import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Iterator;
 
-import dao.BalanceDao;
-import dao.SettledBalanceDao;
-import dao.TradeDao;
 import model.data.Balance;
 import model.data.Trade;
 import model.data.TradeType;
+import dao.BalanceDao;
+import dao.SettledBalanceDao;
+import dao.TradeDao;
 
 /**
-  *締め処理
-  *締め処理をするクラス。
+  * 締め処理をするlogicmodel
   */
-public class CloseTrade {
+public class CloseTradeLogic {
   /** 暫定残高データのDAO　*/
   private BalanceDao balanceDao = new BalanceDao();
   /** 確定残高データのDAO　*/
@@ -27,14 +24,10 @@ public class CloseTrade {
   private TradeDao tradeDao = new TradeDao();
 
   /**
-    *締め処理をするメソッド
+    * 締め処理をするメソッド
+    * @return 処理が完了したらtrue
     */
-  public void execute() {
-    //取引データがない場合はエラーを表示
-    if(!this.tradeDao.isExistTradeData()) {
-      System.out.println("前日の取引の締め処理は完了しています。\n");
-      return;
-    }
+  public boolean execute() {
     //前日の取引一覧を取得
     List<Trade> tradeList = this.tradeDao.getTradeList();
 
@@ -96,5 +89,7 @@ public class CloseTrade {
     this.balanceDao.writeBalanceData(balanceList);
     //取引リストの削除
     this.tradeDao.deleteTradeData();
+
+    return true;
   }
 }
