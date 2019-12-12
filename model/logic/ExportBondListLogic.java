@@ -41,7 +41,7 @@ public class ExportBondListLogic {
       //銘柄名、償還年月日、利率、クーポン回数を取得
       Bond masterData = this.bondDao.getMasterData(code);
       String name = masterData.getName();
-      BigDecimal rate = masterData.getRate();
+      BigDecimal rate = masterData.getRate().setScale(3, RoundingMode.FLOOR);
       int maturity = masterData.getMaturity();
       int coupon = masterData.getCoupon();
 

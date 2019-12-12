@@ -1,11 +1,13 @@
 package model.logic;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import model.data.Balance;
 import model.data.Trade;
 import model.data.TradeType;
+import dao.BalanceDao;
 import dao.SettledBalanceDao;
 import dao.TradeDao;
 
@@ -13,6 +15,8 @@ import dao.TradeDao;
   * 取引データを取り消す処理をするlogicmodel
   */
 public class CancelTradeLogic {
+  /** 表示用残高データのDAO　*/
+  private BalanceDao balanceDao = new BalanceDao();
   /** 確定残高データのDAO　*/
   private SettledBalanceDao settledBalanceDao = new SettledBalanceDao();
   /** 取引データのDAO　*/
@@ -56,6 +60,32 @@ public class CancelTradeLogic {
     if(amount.compareTo(BigDecimal.ZERO) == -1) {
       return false;
     }
+    
+    //表示用の残高情報を変更する
+    List<Balance> balanceList = this.balanceDao.getBalanceList();
+    for(Balance balance : balanceList) {
+      if(balance.getCode().equals(code)) {
+        BigDecimal oldAmount = balance.getAmount();
+        BigDecimal oldBookValue = balance.getBookValue();
+        BigDecimal amountToBeCanceled = tradeToBeCanceled.getAmount();
+        if(tradeToBeCanceled.getTradeType() == TradeType.BUY) {
+          amountToBeCanceled = amountToBeCanceled.negate();
+        }
+        BigDecimal newAmount = oldAmount.add(amountToBeCanceled);
+        BigDecimal newBookValue = BigDecimal.ZERO;
+        if(tradeToBeCanceled.getTradeType() == TradeType.SELL) {
+          newBookValue = oldBookValue;
+        } else if(!newAmount.equals(BigDecimal.ZERO)) {
+          newBookValue = oldBookValue.multiply(oldAmount).add(tradeToBeCanceled.getPrice().multiply(amountToBeCanceled))
+          .divide(newAmount, 3, RoundingMode.FLOOR);
+        }
+        balance.setAmount(newAmount);
+        balance.setBookValue(newBookValue);
+        this.balanceDao.updateBalanceData(balance);
+        break;
+      }
+    }
+
     //取引リストから選択された取引を取り消す
     tradeList.remove(tradeNumToBeCanceled);
     //取引リストに書き込む

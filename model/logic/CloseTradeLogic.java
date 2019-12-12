@@ -50,12 +50,12 @@ public class CloseTradeLogic {
         BigDecimal newAmount = oldAmount.add(tradeAmount);
 
         //簿価の更新
-        BigDecimal newBookValue = null;
-        if(newAmount.compareTo(BigDecimal.ONE) == -1) {
-          newBookValue = BigDecimal.ZERO;
+        BigDecimal newBookValue = BigDecimal.ZERO;
+        if(oldAmount.compareTo(BigDecimal.ZERO) < 0) { //残高がマイナスなら簿価は取引の価格にする
+          newBookValue = tradePrice.setScale(3, RoundingMode.FLOOR);
         } else if(tradeAmount.compareTo(BigDecimal.ZERO) == -1) { //売りのときは簿価は変わらない
           newBookValue = oldBookValue;
-        } else {
+        } else if(!newAmount.equals(BigDecimal.ZERO)){
           newBookValue = (oldAmount.multiply(oldBookValue).add(tradeAmount.multiply(tradePrice)))
                                   .divide(newAmount,3,RoundingMode.FLOOR);
         }
@@ -66,7 +66,7 @@ public class CloseTradeLogic {
         this.settledBalanceDao.updateBalanceData(balance);
 
       } else { //指定コードの銘柄をまだ保有していない場合
-        if(tradeAmount.compareTo(BigDecimal.ONE) == -1) {
+        if(tradeAmount.compareTo(BigDecimal.ZERO) < 0) {
           tradePrice = BigDecimal.ZERO;
         }
         Balance balance = new Balance(code, tradeAmount, tradePrice.setScale(3, RoundingMode.FLOOR));
