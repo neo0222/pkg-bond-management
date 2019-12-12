@@ -54,13 +54,13 @@ public class TradeBondLogic {
       BigDecimal newAmount = oldAmount.add(tradeAmount);
 
       //保有数量が0未満ならエラーを表示
-      if(newAmount.compareTo(BigDecimal.ZERO) == -1) {
+      if(newAmount.compareTo(BigDecimal.ZERO) < 0) {
         return null;
       }
 
       //簿価の更新
       BigDecimal newBookValue = BigDecimal.ZERO;
-      if(tradeAmount.compareTo(BigDecimal.ZERO) == -1) { //売りの場合は簿価は変わらない
+      if(tradeAmount.compareTo(BigDecimal.ZERO) < 0) { //売りの場合は簿価は変わらない
         newBookValue = oldBookValue;
       } else if(!newAmount.equals(BigDecimal.ZERO)) {
         newBookValue = (oldAmount.multiply(oldBookValue).add(tradeAmount.multiply(tradePrice)))

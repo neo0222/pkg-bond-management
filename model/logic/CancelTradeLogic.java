@@ -57,10 +57,10 @@ public class CancelTradeLogic {
     }
 
     //保有数量がマイナスならエラーを表示
-    if(amount.compareTo(BigDecimal.ZERO) == -1) {
+    if(amount.compareTo(BigDecimal.ZERO) < 0) {
       return false;
     }
-    
+
     //表示用の残高情報を変更する
     List<Balance> balanceList = this.balanceDao.getBalanceList();
     for(Balance balance : balanceList) {

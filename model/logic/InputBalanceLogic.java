@@ -37,7 +37,7 @@ public class InputBalanceLogic {
       BigDecimal updatedAmount = oldAmount.add(newAmount);
 
       //保有数量が0未満ならエラーならcontrollerに処理を戻す
-      if(updatedAmount.compareTo(BigDecimal.ZERO) == -1) {
+      if(updatedAmount.compareTo(BigDecimal.ZERO) < 0) {
         return false;
       }
 
@@ -55,7 +55,7 @@ public class InputBalanceLogic {
 
     } else { //保有していないときの処理
       //保有数量が0未満ならエラーを表示
-      if(newAmount.compareTo(BigDecimal.ZERO) == -1) {
+      if(newAmount.compareTo(BigDecimal.ZERO) < 0) {
         return false;
       }
 

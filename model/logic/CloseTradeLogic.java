@@ -53,7 +53,7 @@ public class CloseTradeLogic {
         BigDecimal newBookValue = BigDecimal.ZERO;
         if(oldAmount.compareTo(BigDecimal.ZERO) < 0) { //残高がマイナスなら簿価は取引の価格にする
           newBookValue = tradePrice.setScale(3, RoundingMode.FLOOR);
-        } else if(tradeAmount.compareTo(BigDecimal.ZERO) == -1) { //売りのときは簿価は変わらない
+        } else if(tradeAmount.compareTo(BigDecimal.ZERO) < 0) { //売りのときは簿価は変わらない
           newBookValue = oldBookValue;
         } else if(!newAmount.equals(BigDecimal.ZERO)){
           newBookValue = (oldAmount.multiply(oldBookValue).add(tradeAmount.multiply(tradePrice)))
