@@ -27,67 +27,74 @@ public class CancelTradeLogic {
     * @param code キャンセルされる取引の銘柄コード
     * @param tradeNumToBeCanceled キャンセルされる取引番号
     * @param tradeList 取引ファイルにある全ての取引データ
-    * @return 保有数量が明茄子になる場合はfalse
+    * @return 保有数量がマイナスになる場合はfalse
     */
   public boolean execute(String code, int tradeNumToBeCanceled, List<Trade> tradeList) {
     //取引によって保有数量がマイナスにならないか確認するための数量
-    BigDecimal amount = BigDecimal.ZERO;
+    BigDecimal amountToBeChecked = BigDecimal.ZERO;
     if(this.settledBalanceDao.isExistBalance(code)) {
-      amount = this.settledBalanceDao.getBalanceData(code).getAmount();
+      amountToBeChecked = this.settledBalanceDao.getBalanceData(code).getAmount();
     }
-
+    //取引リストから選択された取引を取り消す
+    tradeList.remove(tradeNumToBeCanceled);
+    
+    //保有数量のマイナスチェック
     for(Trade trade: tradeList) {
       if(trade.getCode().equals(code)) {
         //保有数量の計算（買いなら加算、売りなら減算）
         if(trade.getTradeType() == TradeType.BUY) {
-          amount = amount.add(trade.getAmount());
+          amountToBeChecked = amountToBeChecked.add(trade.getAmount());
         } else {
-          amount = amount.subtract(trade.getAmount());
+          amountToBeChecked = amountToBeChecked.subtract(trade.getAmount());
+          if(amountToBeChecked.compareTo(BigDecimal.ZERO) < 0) {
+            return false;
+          }
         }
       }
-    }
-    //キャンセルする取引
-    Trade tradeToBeCanceled = tradeList.get(tradeNumToBeCanceled);
-
-    //キャンセルする取引の数量計算
-    if(tradeToBeCanceled.getTradeType() == TradeType.BUY) {
-      amount = amount.subtract(tradeToBeCanceled.getAmount());
-    } else {
-      amount = amount.add(tradeToBeCanceled.getAmount());
-    }
-
-    //保有数量がマイナスならエラーを表示
-    if(amount.compareTo(BigDecimal.ZERO) < 0) {
-      return false;
     }
 
     //表示用の残高情報を変更する
-    List<Balance> balanceList = this.balanceDao.getBalanceList();
-    for(Balance balance : balanceList) {
-      if(balance.getCode().equals(code)) {
-        BigDecimal oldAmount = balance.getAmount();
-        BigDecimal oldBookValue = balance.getBookValue();
-        BigDecimal amountToBeCanceled = tradeToBeCanceled.getAmount();
-        if(tradeToBeCanceled.getTradeType() == TradeType.BUY) {
-          amountToBeCanceled = amountToBeCanceled.negate();
-        }
-        BigDecimal newAmount = oldAmount.add(amountToBeCanceled);
-        BigDecimal newBookValue = BigDecimal.ZERO;
-        if(tradeToBeCanceled.getTradeType() == TradeType.SELL) {
-          newBookValue = oldBookValue;
-        } else if(!newAmount.equals(BigDecimal.ZERO)) {
-          newBookValue = oldBookValue.multiply(oldAmount).add(tradeToBeCanceled.getPrice().multiply(amountToBeCanceled))
-          .divide(newAmount, 3, RoundingMode.FLOOR);
-        }
-        balance.setAmount(newAmount);
-        balance.setBookValue(newBookValue);
-        this.balanceDao.updateBalanceData(balance);
-        break;
-      }
+    BigDecimal amount = BigDecimal.ZERO;
+    BigDecimal bookValue = BigDecimal.ZERO;
+    BigDecimal currentPrice = BigDecimal.ONE.negate();
+
+    //確定残高に在庫がある場合はデータを持ってくる
+    if(this.settledBalanceDao.isExistBalance(code)) {
+      amount = this.settledBalanceDao.getBalanceData(code).getAmount();
+      bookValue = this.settledBalanceDao.getBalanceData(code).getBookValue();
     }
 
-    //取引リストから選択された取引を取り消す
-    tradeList.remove(tradeNumToBeCanceled);
+    //表示用残高の方の時価がある場合は取ってくる
+    if(this.balanceDao.isExistBalance(code)) {
+      currentPrice = this.balanceDao.getBalanceData(code).getCurrentPrice();
+    }
+    for(Trade trade : tradeList) {
+      if(trade.getCode().equals(code)) {
+        BigDecimal tradeAmount = trade.getAmount();
+        BigDecimal tradePrice = trade.getPrice();
+        BigDecimal oldAmount = amount;
+
+        if(trade.getTradeType() == TradeType.SELL) {//売りの場合
+          amount = amount.subtract(tradeAmount);
+          //簿価の更新
+          if(amount.equals(BigDecimal.ZERO)) {
+            bookValue = BigDecimal.ZERO;
+          }
+        } else { //買いの場合
+          amount = amount.add(tradeAmount);
+          //簿価の更新
+          if(amount.equals(BigDecimal.ZERO)) {
+            bookValue = BigDecimal.ZERO;
+          } else {
+            bookValue = bookValue.multiply(oldAmount).add(tradePrice.multiply(tradeAmount))
+            .divide(amount, 3, RoundingMode.FLOOR);
+          }
+        }
+      }
+    }
+    Balance balance = new Balance(code, amount, bookValue, currentPrice);
+    this.balanceDao.updateBalanceData(balance);
+
     //取引リストに書き込む
     this.tradeDao.writeTradeData(tradeList);
 

@@ -73,11 +73,12 @@ public class CloseTradeLogic {
         this.settledBalanceDao.putBalanceData(balance);
       }
     }
-    //保有量が０の銘柄の残高情報は削除する
+    //時価の反映と保有数量が０の銘柄の残高情報は削除する
     List<Balance> balanceList = this.settledBalanceDao.getBalanceList();
     Iterator<Balance> balanceIterator = balanceList.iterator();
     while(balanceIterator.hasNext()) {
       Balance balance = balanceIterator.next();
+      balance.setCurrentPrice(this.balanceDao.getBalanceData(balance.getCode()).getCurrentPrice());
       if(balance.getAmount().equals(BigDecimal.ZERO)) {
         balanceIterator.remove();
       }
