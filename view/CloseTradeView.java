@@ -8,7 +8,7 @@ public class CloseTradeView {
     * 取引データがない場合はエラーを表示するメソッド
     */
   public void showProcessIsColsed() {
-    System.out.println("前日の取引の締め処理は完了しています。\n");
+    System.out.println("残高ファイルは最新の状態です。\n");
   }
 
   /**

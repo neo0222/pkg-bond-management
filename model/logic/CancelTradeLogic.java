@@ -37,27 +37,12 @@ public class CancelTradeLogic {
     }
     //取引リストから選択された取引を取り消す
     tradeList.remove(tradeNumToBeCanceled);
-    
-    //保有数量のマイナスチェック
-    for(Trade trade: tradeList) {
-      if(trade.getCode().equals(code)) {
-        //保有数量の計算（買いなら加算、売りなら減算）
-        if(trade.getTradeType() == TradeType.BUY) {
-          amountToBeChecked = amountToBeChecked.add(trade.getAmount());
-        } else {
-          amountToBeChecked = amountToBeChecked.subtract(trade.getAmount());
-          if(amountToBeChecked.compareTo(BigDecimal.ZERO) < 0) {
-            return false;
-          }
-        }
-      }
-    }
 
-    //表示用の残高情報を変更する
+    //表示用残高情報の変更のために残高情報の初期化
     BigDecimal amount = BigDecimal.ZERO;
     BigDecimal bookValue = BigDecimal.ZERO;
     BigDecimal currentPrice = BigDecimal.ONE.negate();
-
+    
     //確定残高に在庫がある場合はデータを持ってくる
     if(this.settledBalanceDao.isExistBalance(code)) {
       amount = this.settledBalanceDao.getBalanceData(code).getAmount();
@@ -68,6 +53,8 @@ public class CancelTradeLogic {
     if(this.balanceDao.isExistBalance(code)) {
       currentPrice = this.balanceDao.getBalanceData(code).getCurrentPrice();
     }
+
+    //保有数量のマイナスチェック/表示用の残高情報の変更
     for(Trade trade : tradeList) {
       if(trade.getCode().equals(code)) {
         BigDecimal tradeAmount = trade.getAmount();
@@ -75,12 +62,19 @@ public class CancelTradeLogic {
         BigDecimal oldAmount = amount;
 
         if(trade.getTradeType() == TradeType.SELL) {//売りの場合
+          amountToBeChecked = amountToBeChecked.subtract(trade.getAmount());
+
+          if(amountToBeChecked.compareTo(BigDecimal.ZERO) < 0) {
+            return false;
+          }
           amount = amount.subtract(tradeAmount);
           //簿価の更新
           if(amount.equals(BigDecimal.ZERO)) {
             bookValue = BigDecimal.ZERO;
           }
         } else { //買いの場合
+          amountToBeChecked = amountToBeChecked.add(trade.getAmount());
+
           amount = amount.add(tradeAmount);
           //簿価の更新
           if(amount.equals(BigDecimal.ZERO)) {
