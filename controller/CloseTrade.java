@@ -10,11 +10,11 @@ import dao.TradeDao;
   */
 public class CloseTrade {
   /** 暫定残高データのDAO　*/
-  private CloseTradeView closeTradeView = new CloseTradeView();
+  private final CloseTradeView closeTradeView = new CloseTradeView();
   /** 確定残高データのDAO　*/
-  private CloseTradeLogic closeTradeLogic = new CloseTradeLogic();
+  private final CloseTradeLogic closeTradeLogic = new CloseTradeLogic();
   /** 取引データのDAO　*/
-  private TradeDao tradeDao = new TradeDao();
+  private final TradeDao tradeDao = new TradeDao();
 
   /**
     * 締め処理をするメソッド

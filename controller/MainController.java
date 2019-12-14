@@ -8,19 +8,19 @@ import view.MainView;
   */
 public class MainController {
   /** 在庫入力を制御するController */
-  private InputBalance inputBalance = new InputBalance();
+  private final InputBalance inputBalance = new InputBalance();
   /** 値洗いを制御するController */
-  private MarkToMarket markToMarket = new MarkToMarket();
+  private final MarkToMarket markToMarket = new MarkToMarket();
   /** 一覧表の表示を制御するController */
-  private ExportBondList exportBondList = new ExportBondList();
+  private final ExportBondList exportBondList = new ExportBondList();
   /** 売買取引を制御するController */
-  private TradeBond tradeBond = new TradeBond();
+  private final TradeBond tradeBond = new TradeBond();
   /** 取引の取り消しを制御するController */
-  private CancelTrade cancelTrade = new CancelTrade();
+  private final CancelTrade cancelTrade = new CancelTrade();
   /** 締め処理を制御するController */
-  private CloseTrade closeTrade = new CloseTrade();
+  private final CloseTrade closeTrade = new CloseTrade();
   /** メニューを表示するView */
-  private MainView mainView = new MainView();
+  private final MainView mainView = new MainView();
 
   /**
     * メインメニューを表示し、各controllerを呼び出すメソッド

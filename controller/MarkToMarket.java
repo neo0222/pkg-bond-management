@@ -14,9 +14,9 @@ import model.logic.MarkToMarketLogic;
   */
 public class MarkToMarket {
   /** 当日値洗い処理のview　*/
-  private MarkToMarketView markToMarketView = new MarkToMarketView();
+  private final MarkToMarketView markToMarketView = new MarkToMarketView();
   /** 当日値洗い処理のlogicmodel　*/
-  private MarkToMarketLogic markToMarketLogic = new MarkToMarketLogic();
+  private final MarkToMarketLogic markToMarketLogic = new MarkToMarketLogic();
 
   /**
     * 当日の値洗い処理をするメソッド

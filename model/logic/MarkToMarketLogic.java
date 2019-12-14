@@ -15,9 +15,9 @@ import dao.BalanceDao;
   */
 public class MarkToMarketLogic {
   /** マスターデータのDAO　*/
-  private BondDao bondDao = new BondDao();
+  private final BondDao bondDao = new BondDao();
   /** 残高データのDAO　*/
-  private BalanceDao balanceDao = new BalanceDao();
+  private final BalanceDao balanceDao = new BalanceDao();
 
   /**
     * 保有している銘柄のマスターデータを返すメソッド

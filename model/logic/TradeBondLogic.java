@@ -15,9 +15,9 @@ import dao.TradeDao;
   */
 public class TradeBondLogic {
   /** 残高データのDAO　*/
-  private BalanceDao balanceDao = new BalanceDao();
+  private final BalanceDao balanceDao = new BalanceDao();
   /** 取引データのDAO　*/
-  private TradeDao tradeDao = new TradeDao();
+  private final TradeDao tradeDao = new TradeDao();
 
   /**
     * 取引データを入力する処理をするメソッド

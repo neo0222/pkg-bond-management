@@ -12,9 +12,9 @@ import dao.BalanceDao;
   */
 public class InputBalanceLogic {
   /** マスターデータのDAO　*/
-  private BondDao bondDao = new BondDao();
+  private final BondDao bondDao = new BondDao();
   /** 残高データのDAO　*/
-  private BalanceDao balanceDao = new BalanceDao();
+  private final BalanceDao balanceDao = new BalanceDao();
 
   /**
     * 在庫データを入力する処理をするメソッド

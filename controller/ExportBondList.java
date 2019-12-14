@@ -11,9 +11,9 @@ import model.logic.ExportBondListLogic;
   */
 public class ExportBondList {
   /** 一覧表の出力形式のリストを作成するlogicmodel */
-  private ExportBondListLogic exportBondListLogic = new ExportBondListLogic();
+  private final ExportBondListLogic exportBondListLogic = new ExportBondListLogic();
   /** 保有銘柄残高一覧を表示するview */
-  private ExportBondListView exportBondListView = new ExportBondListView();
+  private final ExportBondListView exportBondListView = new ExportBondListView();
 
   /**
     * 保有銘柄残高一覧を表示するメソッド

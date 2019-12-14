@@ -17,7 +17,7 @@ public class TradeDao {
   /** 取引ファイルパス */
   private static final String filePath = "csv/tradedata.csv";
   /** 取引ファイルの存在自体を操作するためのPathインスタンス */
-  private Path path = Paths.get(this.filePath);
+  private final Path path = Paths.get(filePath);
 
   /**
     * 取引ファイルが存在するか確認するメソッド

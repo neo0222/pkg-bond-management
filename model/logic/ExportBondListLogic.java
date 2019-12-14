@@ -15,9 +15,9 @@ import dao.BalanceDao;
   */
 public class ExportBondListLogic {
   /** マスターデータのDAO　*/
-  private BondDao bondDao = new BondDao();
+  private final BondDao bondDao = new BondDao();
   /** 残高データのDAO　*/
-  private BalanceDao balanceDao = new BalanceDao();
+  private final BalanceDao balanceDao = new BalanceDao();
 
   /**
     * 一覧表の出力形式のリストを返すメソッド

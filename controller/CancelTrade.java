@@ -13,11 +13,11 @@ import dao.TradeDao;
   */
 public class CancelTrade {
   /** 取引データを取り消す処理のview */
-  private CancelTradeView cancelTradeView = new CancelTradeView();
+  private final CancelTradeView cancelTradeView = new CancelTradeView();
   /** 取引データを取り消す処理をするlogicmodel */
-  private CancelTradeLogic cancelTradeLogic = new CancelTradeLogic();
+  private final CancelTradeLogic cancelTradeLogic = new CancelTradeLogic();
   /** 取引データのDAO　*/
-  private TradeDao tradeDao = new TradeDao();
+  private final TradeDao tradeDao = new TradeDao();
 
   /**
     * 取引データを取り消す処理をするメソッド
@@ -38,7 +38,7 @@ public class CancelTrade {
     }
     //取引データの一覧を取得
     List<Trade> tradeList = this.tradeDao.getTradeList();
-    
+
     //キャンセルする取引番号を取得
     int tradeNumToBeCanceled = this.cancelTradeView.recieveCancelTradeNumber(code, tradeList);
 

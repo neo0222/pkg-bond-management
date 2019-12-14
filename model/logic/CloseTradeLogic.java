@@ -17,11 +17,11 @@ import dao.TradeDao;
   */
 public class CloseTradeLogic {
   /** 暫定残高データのDAO　*/
-  private BalanceDao balanceDao = new BalanceDao();
+  private final BalanceDao balanceDao = new BalanceDao();
   /** 確定残高データのDAO　*/
-  private SettledBalanceDao settledBalanceDao = new SettledBalanceDao();
+  private final SettledBalanceDao settledBalanceDao = new SettledBalanceDao();
   /** 取引データのDAO　*/
-  private TradeDao tradeDao = new TradeDao();
+  private final TradeDao tradeDao = new TradeDao();
 
   /**
     * 締め処理をするメソッド

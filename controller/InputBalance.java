@@ -12,11 +12,11 @@ import dao.BondDao;
   */
 public class InputBalance {
   /** 在庫データを入力する処理をするview　*/
-  private InputBalanceView inputBalanceView = new InputBalanceView();
+  private final InputBalanceView inputBalanceView = new InputBalanceView();
   /** 在庫データを入力する処理をするlogicmodel */
-  private InputBalanceLogic inputBalanceLogic = new InputBalanceLogic();
+  private final InputBalanceLogic inputBalanceLogic = new InputBalanceLogic();
   /** マスターデータのDAO　*/
-  private BondDao bondDao = new BondDao();
+  private final BondDao bondDao = new BondDao();
 
   /**
     * 在庫データを入力する処理をするメソッド

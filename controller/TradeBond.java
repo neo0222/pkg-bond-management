@@ -13,13 +13,13 @@ import dao.BalanceDao;
   */
 public class TradeBond {
   /** 売買取引データを入力する処理をするview　*/
-  private TradeBondView tradeBondView = new TradeBondView();
+  private final TradeBondView tradeBondView = new TradeBondView();
   /** 売買取引データを入力する処理をするlogicmodel */
-  private TradeBondLogic tradeBondLogic = new TradeBondLogic();
+  private final TradeBondLogic tradeBondLogic = new TradeBondLogic();
   /** マスターデータのDAO　*/
-  private BondDao bondDao = new BondDao();
+  private final BondDao bondDao = new BondDao();
   /** 残高データのDAO　*/
-  private BalanceDao balanceDao = new BalanceDao();
+  private final BalanceDao balanceDao = new BalanceDao();
 
   /**
     * 取引データを入力する処理をするメソッド
