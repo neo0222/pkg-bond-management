@@ -12,7 +12,7 @@ public class MainView {
     public int recieveMenuNum() {
       //メニューの番号
       int menuNum = 0;
-      System.out.println("\n------ 債権の在庫管理システム ------");
+      System.out.println("\n------------------------------------------ 債券在庫管理システム ------------------------------------------");
       System.out.println("<メニュー>");
       System.out.println("1:在庫の入力  2:当日の値洗い  3:保有銘柄残高一覧の表示  4:売買取引 5:当日取引の取り消し 6:締め処理 7:終了\n");
       System.out.print("メニューを選択してください>");
