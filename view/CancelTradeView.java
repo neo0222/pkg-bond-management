@@ -34,8 +34,8 @@ public class CancelTradeView {
 
   /**
     * キャンセルする取引の番号を入力させ取得するメソッド
-    * @param code
-    * @param tradeList
+    * @param code キャンセルする取引の銘柄コード　
+    * @param tradeList 当日の全ての取引のリスト
     * @return キャンセルする取引番号
     */
   public int recieveCancelTradeNumber(String code, List<Trade> tradeList) {

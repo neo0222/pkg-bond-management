@@ -22,7 +22,7 @@ public class TradeBondView {
       BufferedReader br = new BufferedReader
         (new InputStreamReader(System.in));
 
-      System.out.print("銘柄コード>");
+      System.out.print("銘柄コード [end:終了]>");
       code = br.readLine();
 
     } catch(IOException e) {

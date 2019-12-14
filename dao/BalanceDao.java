@@ -10,41 +10,8 @@ import model.data.Balance;
   * 表示用の銘柄暫定残高ファイルに関する処理をするクラス。
   */
 public class BalanceDao {
-  /** 銘柄暫定残高ファイルパス */
+  /** 表示用の銘柄暫定残高ファイルパス */
   private static final String filePath = "csv/balancedata.csv";
-  /**
-    * 銘柄のコードの保有数量と簿価を取り出すメソッド
-    * @param code　探索する銘柄コード
-    * @return 探索コードと等しい銘柄情報
-    */
-  public Balance getBalanceData(String code) {
-    Balance balance = null;
-    BufferedReader br = null;
-    try {
-      br = new BufferedReader(new FileReader(this.filePath));
-
-      String line = null;
-      while((line = br.readLine()) != null) {
-        String[] balanceData = line.split(",", -1);
-        //一致する銘柄に対する処理
-        if(balanceData[0].equals(code)) {
-          balance = new Balance(code, new BigDecimal(balanceData[1]), new BigDecimal(balanceData[2]), new BigDecimal(balanceData[3]));
-          break;
-        }
-      }
-    } catch(IOException e) {
-      System.out.println(e);
-    } finally {
-      if(br != null){
-        try {
-          br.close();
-        } catch(IOException e2) {
-          System.out.println(e2);
-        }
-      }
-    }
-    return balance;
-  }
   /**
     * 探索する銘柄コードと一致する銘柄の有無を確認するメソッド
     * @param code　探索する銘柄コード
@@ -79,8 +46,41 @@ public class BalanceDao {
     return result;
   }
   /**
-    * 銘柄の簿価と保有数量を更新するメソッド
-    * @param balance 銘柄コード・保有数量・簿価・時価の情報
+    * 銘柄のコードの保有数量と簿価を取り出すメソッド
+    * @param code　探索する銘柄コード
+    * @return 探索コードと等しい銘柄情報
+    */
+  public Balance getBalanceData(String code) {
+    Balance balance = null;
+    BufferedReader br = null;
+    try {
+      br = new BufferedReader(new FileReader(this.filePath));
+
+      String line = null;
+      while((line = br.readLine()) != null) {
+        String[] balanceData = line.split(",", -1);
+        //一致する銘柄に対する処理
+        if(balanceData[0].equals(code)) {
+          balance = new Balance(code, new BigDecimal(balanceData[1]), new BigDecimal(balanceData[2]), new BigDecimal(balanceData[3]));
+          break;
+        }
+      }
+    } catch(IOException e) {
+      System.out.println(e);
+    } finally {
+      if(br != null){
+        try {
+          br.close();
+        } catch(IOException e2) {
+          System.out.println(e2);
+        }
+      }
+    }
+    return balance;
+  }
+  /**
+    * 表示用の残高情報を更新するメソッド
+    * @param balance 更新する銘柄の残高の情報
     */
   public void updateBalanceData(Balance balance) {
     //銘柄残高の一覧を取得
@@ -95,8 +95,8 @@ public class BalanceDao {
     this.writeBalanceData(balanceList);
   }
   /**
-    * 銘柄残高ファイルに新たな銘柄を追加するメソッド
-    * @param balance 銘柄コード・保有数量・簿価・時価の情報
+    * 表示用の残高ファイルに新たな銘柄を追加するメソッド
+    * @param balance 追加する銘柄の残高の情報
     */
   public void putBalanceData(Balance balance) {
     PrintWriter pw = null;
@@ -118,8 +118,8 @@ public class BalanceDao {
     }
   }
   /**
-    * 銘柄残高ファイルから１行ずつリストに格納し返すメソッド
-    * @return 銘柄残高ファイルにある銘柄情報リスト
+    * 表示用の残高ファイルから１行ずつリストに格納し返すメソッド
+    * @return 表示用残高ファイルにある銘柄の残高情報リスト
     */
   public List<Balance> getBalanceList() {
     List<Balance> balanceList = new ArrayList<>();
@@ -150,7 +150,7 @@ public class BalanceDao {
   }
   /**
     * リストから１行ずつ銘柄残高ファイルに書き込むメソッド
-    * @param balanceList 銘柄の残高情報
+    * @param balanceList 残高情報のリスト
     */
   public void writeBalanceData(List<Balance> balanceList) {
     PrintWriter pw = null;
@@ -173,9 +173,9 @@ public class BalanceDao {
     }
   }
   /**
-    * 指定した銘柄コードの銘柄情報が銘柄残高ファイルの何行目にあるか返すメソッド
+    * 指定した銘柄コードの銘柄情報が表示用の残高ファイルの何行目にあるか返すメソッド
     * @param code 探索する銘柄コード
-    * @return 探索する銘柄コードと同じ銘柄情報が銘柄残高ファイルの何行目にあるか
+    * @return 探索する銘柄コードと同じ銘柄情報が表示用残高ファイルの何行目にあるか
     */
   private int getRowNumber(String code) {
     int rowNumber = 0;

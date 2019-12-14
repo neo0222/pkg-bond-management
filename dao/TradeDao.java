@@ -70,8 +70,8 @@ public class TradeDao {
     return result;
   }
   /**
-    * 取引ファイルに新たな銘柄を追加するメソッド
-    * @param trade 銘柄コード・売買・取引価格・取引数量の情報
+    * 取引ファイルに新たな取引を追加するメソッド
+    * @param trade 売買取引の情報
     */
   public void putTradeData(Trade trade) {
     PrintWriter pw = null;
@@ -94,7 +94,7 @@ public class TradeDao {
   }
   /**
     * 取引ファイルから１行ずつリストに格納し返すメソッド
-    * @return 取引ファイルにある取引リスト
+    * @return 取引ファイルにある全取引のリスト
     */
   public List<Trade> getTradeList() {
     List<Trade> tradeList = new ArrayList<>();
@@ -125,7 +125,7 @@ public class TradeDao {
   }
   /**
     * リストから１行ずつ取引ファイルに書き込むメソッド
-    * @param tradeList 取引のリスト
+    * @param tradeList 取引ファイルにある全取引のリスト
     */
   public void writeTradeData(List<Trade> tradeList) {
     PrintWriter pw = null;
